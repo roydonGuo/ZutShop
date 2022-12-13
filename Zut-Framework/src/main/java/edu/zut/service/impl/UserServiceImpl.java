@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.zut.domain.ResponseResult;
+import edu.zut.domain.dto.UserDto;
 import edu.zut.domain.entity.User;
 import edu.zut.domain.vo.UserInfoVo;
 import edu.zut.enums.AppHttpCodeEnum;
@@ -44,32 +45,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseResult register(User user) {
-        //对数据进行非空判断
-        if (StringUtils.isEmpty(user.getUsername())) {
+    public ResponseResult register(UserDto userDto) {
+        //非空判断
+        if (StringUtils.isEmpty(userDto.getUsername())) {
             throw new SystemException(AppHttpCodeEnum.USERNAME_NOT_NULL);
         }
-        if (StringUtils.isEmpty(user.getPassword())) {
+        if (StringUtils.isEmpty(userDto.getPassword())) {
             throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_NULL);
         }
-        if (StringUtils.isEmpty(user.getEmail())) {
-            throw new SystemException(AppHttpCodeEnum.EMAIL_NOT_NULL);
-        }
-
-        //对数据进行是否存在的判断
-        if (userNameExist(user.getUsername())) {
+        //数据库中是否存在此用户名
+        if (userNameExist(userDto.getUsername())) {
             throw new SystemException(AppHttpCodeEnum.USERNAME_EXIST);
         }
-        //...
-        //对密码进行加密
-        String encodePassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodePassword);
-        save(user);
-
+        //密码加密
+        String encodePassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodePassword);
+        save(BeanCopyUtils.copyBean(userDto,User.class));
         return ResponseResult.okResult();
     }
-
-
 
     private boolean userNameExist(String userName) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();

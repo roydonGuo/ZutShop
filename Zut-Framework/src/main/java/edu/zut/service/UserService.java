@@ -2,6 +2,7 @@ package edu.zut.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.zut.domain.ResponseResult;
+import edu.zut.domain.dto.UserDto;
 import edu.zut.domain.entity.User;
 
 
@@ -16,6 +17,6 @@ public interface UserService extends IService<User> {
 
     ResponseResult updateUserInfo(User user);
 
-    ResponseResult register(User user);
+    ResponseResult register(UserDto userDto);
 }
 

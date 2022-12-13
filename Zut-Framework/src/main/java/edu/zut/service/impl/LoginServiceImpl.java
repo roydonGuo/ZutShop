@@ -5,9 +5,10 @@ import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.LoginUser;
 import edu.zut.domain.entity.User;
 import edu.zut.domain.vo.UserInfoVo;
+import edu.zut.domain.vo.UserLoginVo;
 import edu.zut.enums.AppHttpCodeEnum;
 import edu.zut.exception.SystemException;
-import edu.zut.service.AdminLoginService;
+import edu.zut.service.LoginService;
 import edu.zut.utils.BeanCopyUtils;
 import edu.zut.utils.JwtUtil;
 import edu.zut.utils.RedisCache;
@@ -15,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Objects;
 
+import static edu.zut.constants.CodeConstants.CODE_200;
 import static edu.zut.constants.RedisConstants.LOGIN_USER_KEY;
 
 /**
@@ -27,7 +30,7 @@ import static edu.zut.constants.RedisConstants.LOGIN_USER_KEY;
  **/
 @Slf4j
 @Service
-public class AdminLoginServiceImpl implements AdminLoginService {
+public class LoginServiceImpl implements LoginService {
 
     @Resource
     private AuthenticationManager authenticationManager;
@@ -66,11 +69,26 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         redisCache.setCacheObject(LOGIN_USER_KEY + userId, loginUser);
 
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
+        UserLoginVo userLoginVo = new UserLoginVo(jwt, userInfoVo);
 
-        log.info("当前登录用户：{}", userInfoVo);
+        log.info("用户以登陆==>{}", userLoginVo);
 
-        return ResponseResult.okResult(userInfoVo);
+        return ResponseResult.okResult(userLoginVo);
     }
 
-
+    /**
+     * 退出登录
+     * 1.获取用户信息 SecurityContextHolder.getContext().getAuthentication();
+     * 2.通过用户 id 清除 redis
+     *
+     * @return ResponseResult(CODE_200, " 退出成功 ");
+     */
+    @Override
+    public ResponseResult logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Integer uid = loginUser.getUser().getUid();
+        redisCache.deleteObject(LOGIN_USER_KEY + uid);
+        return new ResponseResult(CODE_200, "退出成功");
+    }
 }
