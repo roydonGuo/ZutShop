@@ -1,6 +1,9 @@
 package edu.zut.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +25,10 @@ public class User {
     private Integer uid;
 
     //用户名
+    @ApiModelProperty(value = "用户名")
     private String username;
     //密码
     private String password;
-    //盐值
-    private String salt;
     //性别,0-女,1-男
     private Integer gender;
     //电话
@@ -38,12 +40,16 @@ public class User {
     //是否删除,0-未删除,1-已删除
     private Integer isDelete;
     //创建执行人
-    private String createdUser;
+    @TableField(fill = FieldFill.INSERT)
+    private Integer createdUser;
     //创建时间
+    @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
     //修改执行人
-    private String modifiedUser;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Integer modifiedUser;
     //修改时间
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifiedTime;
 
 
