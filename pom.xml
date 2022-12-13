@@ -10,7 +10,6 @@
     <version>1.0.0</version>
     <modules>
         <module>Zut-Framework</module>
-        <module>Zut-Admin</module>
         <module>Zut-Shopping</module>
     </modules>
 
