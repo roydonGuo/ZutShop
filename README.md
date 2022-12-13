@@ -2,6 +2,7 @@
 Junior practical training project
 
 ---
+
 # 0. 项目介绍
 
 项目名称：学子商城。类似于购物车系统、订单系统。前后端分离。
@@ -586,6 +587,8 @@ mybatis-plus:
       id-type: auto
 ```
 
+> `注意：`MP配置好后最好在测试类中测试能否拿到数据库数据。
+
 ## 2.5 Redis配置
 
 需要用到ali的fastjson序列化器在redis存值的时候进行序列化，保证是转义后的中文字符。
@@ -996,9 +999,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-注入好Security使用的加密工具BCryptPasswordEncoder后测试密码加密功能是否正常。
+配置中注入好Security使用的加密工具BCryptPasswordEncoder后在测试类中测试密码加密功能是否正常。
 
-此处引入spring容器管理的bean，重新new BCryptPasswordEncoder密码会匹配不上
+此处引入spring容器管理的bean，重新new BCryptPasswordEncoder密码会匹配不上。
 
 ```java
 @Resource
@@ -1017,13 +1020,527 @@ void pwdTest() {
 boolean matches = passwordEncoder.matches("123456",user.getPassword()); //true
 ```
 
-# 3. 用户操作
+# 3. 用户业务
 
 ## 3.1 登录登出接口
 
+### 3.1.1登录
 
+controller
 
+```java
+@RestController
+@RequestMapping("/user")
+public class LoginController {
 
+    @Resource
+    private LoginService loginService;
+
+    @PostMapping("/login")
+    @ApiOperation(value = "用户登录")
+    public ResponseResult login(@RequestBody User user){
+        if(!StringUtils.hasText(user.getUsername())){
+            //提示 必须要传用户名
+            throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
+        }
+        return loginService.login(user);
+    }
+
+}
+```
+
+。LoginService
+
+```java
+public interface LoginService {
+    ResponseResult login(User user);
+    ResponseResult logout();
+}
+```
+
+LoginUser实体类，封装进User和用户的权限，权限本系统不需要，直接跳过返回null
+
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginUser implements UserDetails {
+
+    private User user;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}
+```
+
+实现`UserDetailsService`接口，重写`loadUserByUsername()`方法。暂且不需要角色权限。返回LoginUser对象
+
+```java
+@Slf4j
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
+
+    @Resource
+    private UserMapper userMapper;
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        // 方法引用
+        queryWrapper.eq(StringUtils.isNotEmpty(username),User::getUsername,username);
+
+        User user = userMapper.selectOne(queryWrapper);
+
+        if (Objects.isNull(user)) {
+            throw new UsernameNotFoundException("用户名或密码错误");
+        }
+        //判断用户是否被删除
+        if (Objects.equals(user.getIsDelete(), IS_DELETED)) {
+            throw new SystemException(AppHttpCodeEnum.USER_IS_DELETED);
+        }
+
+        log.info("数据库登录用户：{}",user);
+        //TODO 查询角色权限
+
+        return new LoginUser(user);
+    }
+
+}
+```
+
+service实现类：
+
+```java
+@Slf4j
+@Service
+public class LoginServiceImpl implements LoginService {
+
+    @Resource
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    private RedisCache redisCache;
+
+    /**
+     * 登录
+     * @param user
+     * @return ResponseResult.okResult(userLoginVo)
+     */
+    @Override
+    public ResponseResult login(User user) {
+        //判断用户名是否为空
+        if (StringUtils.isEmpty(user.getUsername())) {
+            throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
+        }
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        //判断是否认证通过
+        if (Objects.isNull(authentication)) {
+            throw new RuntimeException("用户名或密码错误");
+        }
+        // 认证成功，从Authentication获取LoginUser
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+        log.info("loginUser:{}", loginUser);
+
+        String userId = loginUser.getUser().getUid().toString();
+        // 生成token
+        String jwt = JwtUtil.createJWT(userId);
+        // 存入redis
+        redisCache.setCacheObject(LOGIN_USER_KEY + userId, loginUser);
+
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
+        UserLoginVo userLoginVo = new UserLoginVo(jwt, userInfoVo);
+
+        log.info("用户以登陆==>{}", userLoginVo);
+
+        return ResponseResult.okResult(userLoginVo);
+    }
+}
+```
+
+封装的前后端交互实体`UserInfoVo`，把重要的信息隐藏起来。
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+public class UserInfoVo {
+    /**
+     * 主键
+     */
+    private Integer uid;
+    /**
+     * 用户名
+     */
+    private String username;
+    /**
+     * 手机号
+     */
+    private String phone;
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    private Integer gender;
+
+    private String email;
+
+}
+```
+
+相应给前端token实体类`UserLoginVo`
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserLoginVo {
+    private String token;
+    private UserInfoVo userInfo;
+}
+```
+
+自定义异常：前文枚举类已经定义过，就是此处构造方法参数AppHttpCodeEnum，当服务需要往外抛出错误时，指定响应码和对应响应信息，threw new SystemException()，把枚举AppHttpCodeEnum传递进去即可。
+
+```java
+public class SystemException extends RuntimeException {
+    private int code;
+    private String msg;
+
+    public int getCode() {return code;}
+    public String getMsg() {return msg;}
+
+    public SystemException(AppHttpCodeEnum httpCodeEnum) {
+        super(httpCodeEnum.getMsg());
+        this.code = httpCodeEnum.getCode();
+        this.msg = httpCodeEnum.getMsg();
+    }
+}
+```
+
+全局异常捕获handler：
+
+`@RestControllerAdvice`这个注解继承了多个注解，包括Compont注解，作用之一就是可以自定义异常信息。当捕获到异常响应给且前端。
+
+```java
+@Slf4j
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(SystemException.class)
+    public ResponseResult systemExceptionHandle(SystemException se) {
+        log.info("最喜欢异常了==>{}", se);
+        return ResponseResult.errorResult(se.getCode(), se.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseResult exceptionHandle(Exception e) {
+        log.info("最喜欢异常了==>{}", e);
+        return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR.getCode(), e.getMessage());
+    }
+}
+```
+
+jwt认证过滤器：
+
+```java
+@Component
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+
+    @Resource
+    private RedisCache redisCache;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        //获取请求头中的token
+        String token = request.getHeader("token");
+        if (StringUtils.isEmpty(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        //解析获取userid
+        Claims claims = null;
+        try {
+            claims = JwtUtil.parseJWT(token);
+        } catch (Exception e) {
+            // token超时，或token非法
+            e.printStackTrace();
+//            ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+//            WebUtils.renderString(response, JSON.toJSONString(responseResult));
+            return;
+        }
+        String userId = claims.getSubject();
+        //从redis中获取用户信息
+        LoginUser loginUser = redisCache.getCacheObject(LOGIN_USER_KEY + userId);
+        //如果redis获取不到
+        if (Objects.isNull(loginUser)) {
+            throw new RuntimeException("用户未登录");
+        }
+        //存入SecurityContextHolder
+        //TODO 获取权限信息封装到 Authentication 中
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginUser, null, null);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        filterChain.doFilter(request, response);
+    }
+
+}
+```
+
+配置类添加jwt过滤器规则
+
+```java
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Resource
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();// 关闭csrf
+        http
+                //不通过Session获取SecurityContext
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                // 对于登录接口、注册接口 允许匿名访问
+                .antMatchers("/user/login").anonymous()
+                //注销接口需要认证才能访问
+                .antMatchers("/user/logout").authenticated()
+                // 除上面外的所有请求全部不需要认证即可访问
+                .anyRequest().permitAll();
+
+        // jwt过滤器
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //关闭默认的注销功能
+        http.logout().disable();
+        //允许跨域
+        http.cors();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+}
+```
+
+Apifox测试登录接口：
+
+![image-20221213214122124](z-img/image-20221213214122124.png)
+
+redis也成功存入数据
+
+![image-20221213214223209](z-img/image-20221213214223209.png)
+
+### 3.1.2 登出
+
+controller接口
+
+```java
+@RequestMapping("/logout")
+@ApiOperation(value = "退出登录")
+public ResponseResult logout(){
+    return loginService.logout();
+}
+```
+
+实现类重写登出方法
+
+```java
+/**
+ * 退出登录
+ * 1.获取用户信息 SecurityContextHolder.getContext().getAuthentication();
+ * 2.通过用户 id 清除 redis
+ *
+ * @return ResponseResult(CODE_200, " 退出成功 ");
+ */
+@Override
+public ResponseResult logout() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+    Integer uid = loginUser.getUser().getUid();
+    redisCache.deleteObject(LOGIN_USER_KEY + uid);
+    return new ResponseResult(CODE_200, "退出成功");
+}
+```
+
+## 3.2 注册用户
+
+前端页面：
+
+![image-20221213214640730](z-img/image-20221213214640730.png)
+
+### 3.2.1 需求分析
+
+前端发送ajax请求，确认密码由前端进行判断，前端只传给后端用户名、密码两个字段的json串。
+
+* 前端传入数据格式：(json){ 'username': username, 'password': password }
+
+* 请求地址：/uesr/register
+
+### 3.2.2 后端实现
+
+①. UserController写一个注册接口
+
+```java
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    @Resource
+    private UserService userService;
+
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody UserDto userDto) {
+        return ResponseResult.okResult(userService.register(userDto));
+    }
+
+}
+```
+
+②. 前端传入对象封装
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(description = "前端dto")
+public class UserDto {
+    //用户名
+    private String username;
+    //原密码
+    private String password;
+    //新密码
+    private String newPassword;
+}
+```
+
+③. 实现类重写接口中注册方法
+
+```java
+@Slf4j
+@Service("userService")
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Resource
+    private RedisCache redisCache;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public ResponseResult register(UserDto userDto) {
+        //非空判断
+        if (StringUtils.isEmpty(userDto.getUsername())) {
+            throw new SystemException(AppHttpCodeEnum.USERNAME_NOT_NULL);
+        }
+        if (StringUtils.isEmpty(userDto.getPassword())) {
+            throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_NULL);
+        }
+        //数据库中是否存在此用户名
+        if (userNameExist(userDto.getUsername())) {
+            throw new SystemException(AppHttpCodeEnum.USERNAME_EXIST);
+        }
+        //密码加密
+        String encodePassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodePassword);
+        save(BeanCopyUtils.copyBean(userDto,User.class));
+        return ResponseResult.okResult();
+    }
+
+    private boolean userNameExist(String userName) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, userName);
+        return count(queryWrapper) > 0;
+    }
+
+}
+```
+
+④. 对象拷贝工具封装
+
+因为前端传过来的是UserDto，但执行sql需要用到数据表对应实体：User，所以封装一个对象拷贝工具转一下对象后再进行crud操作。
+
+```java
+/**
+ * 对象、集合拷贝工具类
+ */
+public class BeanCopyUtils {
+
+    private BeanCopyUtils() {
+    }
+
+    public static <V> V copyBean(Object source, Class<V> clazz) {
+        //创建目标对象
+        V result = null;
+        try {
+            result = clazz.newInstance();
+            BeanUtils.copyProperties(source, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static <O, V> List<V> copyBeanList(List<O> list, Class<V> clazz) {
+        return list.stream().map(o -> copyBean(o, clazz)).collect(Collectors.toList());
+    }
+}
+```
+
+## 3.3 修改密码
+
+前端页面：
+
+![image-20221213220239933](z-img/image-20221213220239933.png)
+
+### 3.3.1 需求分析
 
 
 
