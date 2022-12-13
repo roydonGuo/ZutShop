@@ -2,10 +2,9 @@ package edu.zut.controller;
 
 
 import edu.zut.domain.ResponseResult;
+import edu.zut.domain.dto.UserDto;
 import edu.zut.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -21,6 +20,11 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody UserDto userDto) {
+        return ResponseResult.okResult(userService.register(userDto));
+    }
 
     @GetMapping("/page")
     public ResponseResult selectAll() {
