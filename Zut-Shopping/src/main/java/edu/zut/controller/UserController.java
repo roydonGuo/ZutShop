@@ -31,5 +31,10 @@ public class UserController {
         return ResponseResult.okResult(this.userService.list());
     }
 
+    @PostMapping("/update")
+    public ResponseResult update(@RequestBody UserDto userDto) {
+        return ResponseResult.okResult(userService.updatePwd(userDto));
+    }
+
 }
 

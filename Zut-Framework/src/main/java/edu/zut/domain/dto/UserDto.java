@@ -16,8 +16,10 @@ public class UserDto {
 
     //用户名
     private String username;
-    //密码
+    //原密码
     private String password;
+    //新密码
+    private String newPassword;
 
 
 }

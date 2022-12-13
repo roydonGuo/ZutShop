@@ -42,11 +42,11 @@ public class LoginServiceImpl implements LoginService {
      * 登录
      *
      * @param user
-     * @return ResponseResult.okResult(blogUserLoginVo)
+     * @return ResponseResult.okResult(userLoginVo)
      */
     @Override
     public ResponseResult login(User user) {
-
+        //判断用户名是否为空
         if (StringUtils.isEmpty(user.getUsername())) {
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }

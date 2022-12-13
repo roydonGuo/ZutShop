@@ -1,13 +1,16 @@
 package edu.zut.domain.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
  * Author: roydon - 2022/12/12
  **/
-
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 public class UserInfoVo {
     /**
@@ -27,7 +30,7 @@ public class UserInfoVo {
      */
     private String avatar;
 
-    private Integer sex;
+    private Integer gender;
 
     private String email;
 

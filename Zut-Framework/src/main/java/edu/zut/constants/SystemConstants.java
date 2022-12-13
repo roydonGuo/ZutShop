@@ -11,8 +11,8 @@ public class SystemConstants {
     /**
      * 用户是否为删除状态
      */
-    public static final String IS_DELETED = "1";
-    public static final String IS_ALIVE = "0";
+    public static final Integer IS_DELETED = 1;
+    public static final Integer IS_ALIVE = 0;
 
 
 }

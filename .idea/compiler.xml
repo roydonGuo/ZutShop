@@ -9,8 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Zut-Framework" />
         <module name="Zut-Shopping" />
-        <module name="Zut-Admin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Zut-Admin" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
