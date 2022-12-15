@@ -7,6 +7,7 @@ import edu.zut.service.AddressService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Author: roydon - 2022/12/14
@@ -54,6 +55,17 @@ public class AddressController {
         queryWrapper.eq(Address::getAid, aid);
         return ResponseResult.okResult(addressService.remove(queryWrapper));
     }
+
+    /**
+     * 批量删除收货地址
+     * @param aids
+     * @return
+     */
+    @DeleteMapping("/del/batch")
+    public ResponseResult deleteBatch(@RequestBody List<Integer> aids) {
+        return ResponseResult.okResult(addressService.removeByIds(aids));
+    }
+
 
     /**
      * 更新地址
