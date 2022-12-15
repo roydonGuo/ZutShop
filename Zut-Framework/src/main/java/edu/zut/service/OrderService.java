@@ -8,7 +8,7 @@ import edu.zut.domain.entity.Order;
 /**
  * (Order)表服务接口
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-15 20:04:11
  */
 public interface OrderService extends IService<Order> {
