@@ -1,5 +1,8 @@
 package edu.zut.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +22,8 @@ import java.util.Date;
 @TableName("t_address")
 public class Address  {
     //收货地址id@TableId
+    @TableId(value = "aid")
     private Integer aid;
-
     //所属用户的id
     private Integer uid;
     //收货人姓名
@@ -46,12 +49,16 @@ public class Address  {
     //是否默认，0表示非默认 1-默认
     private Integer isDefault;
     //创建执行人
-    private String createdUser;
+    @TableField(fill = FieldFill.INSERT)
+    private Integer createdUser;
     //创建时间
+    @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
     //修改执行人
-    private String modifiedUser;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Integer modifiedUser;
     //修改时间
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifiedTime;
 
 

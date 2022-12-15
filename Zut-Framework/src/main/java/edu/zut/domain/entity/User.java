@@ -2,6 +2,7 @@ package edu.zut.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Date;
 @TableName("t_user")
 public class User {
     //用户id@TableId
+    @TableId(value = "uid")
     private Integer uid;
 
     //用户名
