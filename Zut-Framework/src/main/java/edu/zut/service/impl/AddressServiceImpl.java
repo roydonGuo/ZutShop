@@ -85,22 +85,23 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
             return ResponseResult.okResult();
         }
         //先全部改为默认状态
-        queryWrapper.eq(Address::getUid,SecurityUtils.getUserId());
+        queryWrapper.eq(Address::getUid, SecurityUtils.getUserId());
         //用户的全部地址数据
         List<Address> addressList = list(queryWrapper);
         //过滤出默认地址,理论为一个
         List<Address> collect = addressList.stream().filter(a ->
-            a.getIsDefault().equals(IS_DEFAULT)
+                a.getIsDefault().equals(IS_DEFAULT)
         ).collect(Collectors.toList());
-        collect.forEach(a-> {
+        collect.forEach(a -> {
             a.setIsDefault(NOT_DEFAULT);
-            queryWrapper.eq(Address::getAid,a.getAid());
+            queryWrapper.eq(Address::getAid, a.getAid());
             update(a, queryWrapper);
         });
         //最后将选择修改的非默认地址改为默认
-        queryWrapper.eq(Address::getAid,address.getAid());
-//        address.setIsDefault(IS_DEFAULT);
-        update(address, queryWrapper);
+        LambdaQueryWrapper<Address> queryWrapper2 = new LambdaQueryWrapper<>();
+        queryWrapper2.eq(Address::getAid, address.getAid());
+        address.setIsDefault(IS_DEFAULT);
+        update(address, queryWrapper2);
 
         return ResponseResult.okResult();
     }
