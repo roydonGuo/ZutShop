@@ -24,3 +24,7 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
+oss: #七牛云对象存储
+  accessKey: 5QiJWZTAE8CCDpjiJyy8RlxZWtPzUP0CEWX-_O3i
+  secretKey: S6tbwe-RyZ1R3KN3APYpVYtC5gcnpnCUFTkFWx51
+  bucket: zut-shop-avatar

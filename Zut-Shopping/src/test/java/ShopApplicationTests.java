@@ -1,7 +1,11 @@
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import edu.zut.ShopApplication;
-import edu.zut.domain.dto.UserDto;
+import edu.zut.domain.entity.DictDistrict;
 import edu.zut.domain.entity.User;
+import edu.zut.domain.vo.Area;
+import edu.zut.domain.vo.City;
+import edu.zut.domain.vo.Province;
+import edu.zut.service.DictDistrictService;
 import edu.zut.service.UserService;
 import edu.zut.utils.BeanCopyUtils;
 import org.junit.jupiter.api.Test;
@@ -18,6 +22,8 @@ import java.util.List;
 public class ShopApplicationTests {
     @Resource
     private UserService userService;
+    @Resource
+    private DictDistrictService dictDistrictService;
     @Resource
     private PasswordEncoder passwordEncoder;
 
@@ -46,17 +52,56 @@ public class ShopApplicationTests {
 
     @Test
     void insertUserTest() {
-        userService.save(BeanCopyUtils.copyBean(new UserDto("tom", passwordEncoder.encode("123456"),null), User.class));
+//        userService.save(BeanCopyUtils.copyBean(new UserDto("tom", passwordEncoder.encode("123456"),null), User.class));
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUid, 1);
+        User user = userService.getOne(queryWrapper);
+        System.out.println(user);
+
     }
 
     @Test
-    void updateTest(){
+    void updateTest() {
         //取出登录用户的id
         //查询用户
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUid, 1);
         queryWrapper.eq(User::getPassword, "123456");
-        System.out.println("count+++++++++++++++++++++++++++"+userService.count(queryWrapper));
+        System.out.println("count+++++++++++++++++++++++++++" + userService.count(queryWrapper));
 
     }
+
+    @Test
+    void getDistrict() {
+        LambdaQueryWrapper<DictDistrict> queryWrapper = new LambdaQueryWrapper<DictDistrict>();
+        queryWrapper.eq(DictDistrict::getParent, 86);
+
+        List<DictDistrict> dictDistrictList = dictDistrictService.list(queryWrapper);
+        List<Province> provinceList = BeanCopyUtils.copyBeanList(dictDistrictList, Province.class);
+
+        provinceList.forEach(p->{
+
+            String pCode = p.getCode();
+            LambdaQueryWrapper<DictDistrict> queryWrapper2 = new LambdaQueryWrapper<DictDistrict>();
+            queryWrapper2.eq(DictDistrict::getParent,pCode);
+            List<DictDistrict> dictDistrictList2 = dictDistrictService.list(queryWrapper2);
+            List<City> cityList = BeanCopyUtils.copyBeanList(dictDistrictList2, City.class);
+            //区的封装
+            cityList.forEach(c->{
+                String cCode = c.getCode();
+                LambdaQueryWrapper<DictDistrict> queryWrapper3 = new LambdaQueryWrapper<DictDistrict>();
+                queryWrapper3.eq(DictDistrict::getParent,cCode);
+                List<DictDistrict> dictDistrictList3 = dictDistrictService.list(queryWrapper3);
+                List<Area> areaList = BeanCopyUtils.copyBeanList(dictDistrictList3, Area.class);
+                c.setAreaList(areaList);
+            });
+
+            p.setCityList(cityList);
+
+        });
+
+        provinceList.forEach(System.out::println);
+    }
+
+
 }

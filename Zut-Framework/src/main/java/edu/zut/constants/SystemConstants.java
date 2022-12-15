@@ -14,5 +14,12 @@ public class SystemConstants {
     public static final Integer IS_DELETED = 1;
     public static final Integer IS_ALIVE = 0;
 
+    /**
+     * 默认收货地址
+     */
+    public static final Integer IS_DEFAULT = 1;
+    public static final Integer NOT_DEFAULT = 0;
+
+
 
 }

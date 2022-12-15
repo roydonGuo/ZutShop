@@ -6,7 +6,7 @@ import edu.zut.domain.entity.Address;
 
 
 /**
- * (TAddress)表服务接口
+ * (Address)表服务接口
  *
  * @author makejava
  * @since 2022-12-14 22:08:25

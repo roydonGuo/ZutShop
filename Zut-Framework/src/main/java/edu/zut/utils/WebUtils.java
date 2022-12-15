@@ -29,7 +29,6 @@ public class WebUtils
         }
     }
 
-
     public static void setDownLoadHeader(String filename, ServletContext context, HttpServletResponse response) throws UnsupportedEncodingException {
         String mimeType = context.getMimeType(filename);//获取文件的mime类型
         response.setHeader("content-type",mimeType);

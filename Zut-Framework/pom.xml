@@ -72,12 +72,17 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>com.qiniu</groupId>-->
-        <!--            <artifactId>qiniu-java-sdk</artifactId>-->
-        <!--            <version>[7.7.0, 7.7.99]</version>-->
-        <!--        </dependency>-->
+        <!--七牛云存储-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.7.0, 7.7.99]</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
 
     </dependencies>
 
