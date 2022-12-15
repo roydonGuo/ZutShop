@@ -1,6 +1,7 @@
 package edu.zut.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.zut.domain.ResponseResult;
@@ -39,9 +40,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RedisCache redisCache;
 
     @Override
-    public ResponseResult userInfo() {
+    public ResponseResult getUserInfo(Integer uid) {
         //根据用户id查询用户信息
-        User user = getById(SecurityUtils.getUserId());
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ObjectUtils.isNotEmpty(uid),User::getUid,uid);
+        User user = getOne(queryWrapper);
         //封装成UserInfoVo
         UserInfoVo vo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
         return ResponseResult.okResult(vo);
@@ -49,7 +52,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public ResponseResult updateUserInfo(User user) {
-        return ResponseResult.okResult(updateById(user));
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUid,user.getUid());
+        redisCache.setCacheObject(LOGIN_USER_KEY + user.getUid(), new LoginUser(user));
+        return ResponseResult.okResult(update(user,queryWrapper));
     }
 
     @Resource
@@ -114,6 +120,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = loginUser.getUser();
         user.setPassword(encodePassword);
         log.info("修改后的用户：{}",user);
+        redisCache.setCacheObject(LOGIN_USER_KEY + userId,new LoginUser(user) );
         return ResponseResult.okResult(update(user,queryWrapper));
     }
 }
