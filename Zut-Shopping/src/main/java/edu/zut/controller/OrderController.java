@@ -3,10 +3,7 @@ package edu.zut.controller;
 
 import edu.zut.domain.ResponseResult;
 import edu.zut.service.OrderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -25,6 +22,7 @@ public class OrderController {
 
     /**
      * 分页查询当前登录用户的所有订单
+     *
      * @param pageNum
      * @param pageSize
      * @return
@@ -32,6 +30,16 @@ public class OrderController {
     @GetMapping("/list")
     public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         return ResponseResult.okResult(orderService.userOrderList(pageNum, pageSize));
+    }
+
+    /**
+     * 根据订单id获取订单
+     * @param oid
+     * @return
+     */
+    @GetMapping("/{oid}")
+    public ResponseResult getOrder(@PathVariable Integer oid){
+        return ResponseResult.okResult(orderService.getOrderByOid(oid));
     }
 
 
