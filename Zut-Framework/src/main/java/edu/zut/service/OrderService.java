@@ -14,5 +14,7 @@ import edu.zut.domain.entity.Order;
 public interface OrderService extends IService<Order> {
 
     ResponseResult userOrderList(Integer pageNum, Integer pageSize);
+
+    Order getOrderByOid(Integer oid);
 }
 
