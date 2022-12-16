@@ -20,6 +20,12 @@ public class SystemConstants {
     public static final Integer IS_DEFAULT = 1;
     public static final Integer NOT_DEFAULT = 0;
 
+    /**
+     * goods商品的上架状态
+     */
+    public static final Integer  ON_THE_SHELVES=1;
+    public static final Integer  NOT_ON_SHELVES=2;
+    public static final Integer  GOOD_IS_DELETED=3;
 
 
 }

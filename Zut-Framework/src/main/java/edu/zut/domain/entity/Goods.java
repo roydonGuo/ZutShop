@@ -10,37 +10,40 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 /**
- * (TOrder)表实体类
+ * (TGoods)表实体类
  *
  * @author makejava
- * @since 2022-12-15 20:04:11
+ * @since 2022-12-15 21:38:32
  */
 @SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_order")
-public class Order {
-    //id@TableId
-    @TableId(value = "oid")
-    private Integer oid;
-    //归属于那个用户
-    private Integer uid;
-    //收货人
-    private String name;
-    //收货电话
-    private String phone;
-    //收货地址
-    private String address;
-    //订单状态 0-未支付，1-已支付，2-已取消，3-未发货
+@TableName("t_goods")
+public class Goods {
+    //商品id@TableId
+    @TableId(value = "gid")
+    private Integer gid;
+    //分类id
+    private Integer categoryId;
+    //商品系列
+    private String itemType;
+    //商品标题
+    private String title;
+    //商品卖点
+    private String sellPoint;
+    //商品单价
+    private Long price;
+    //库存数量
+    private Integer num;
+    //条形码
+    private String barcode;
+    //图片路径
+    private String image;
+    //商品状态  1：上架   2：下架   3：删除
     private Integer status;
-    //商品总价
-    private Integer price;
-    //下单时间
-    @TableField(fill = FieldFill.INSERT)
-    private Date orderTime;
-    //支付时间
-    private Date payTime;
+    //显示优先级
+    private Integer priority;
     //创建执行人
     @TableField(fill = FieldFill.INSERT)
     private Integer createdUser;
@@ -53,6 +56,7 @@ public class Order {
     //修改时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifiedTime;
+
 
 }
 
