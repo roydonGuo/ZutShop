@@ -33,7 +33,7 @@ public class Goods {
     //商品卖点
     private String sellPoint;
     //商品单价
-    private Long price;
+    private Integer price;
     //库存数量
     private Integer num;
     //条形码
