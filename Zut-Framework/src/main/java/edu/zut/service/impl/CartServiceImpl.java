@@ -2,18 +2,24 @@ package edu.zut.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.Cart;
 import edu.zut.domain.entity.Goods;
 import edu.zut.domain.vo.CartGoodsVo;
+import edu.zut.exception.SystemException;
 import edu.zut.mapper.CartMapper;
 import edu.zut.service.CartService;
 import edu.zut.service.GoodsService;
 import edu.zut.utils.BeanCopyUtils;
+import edu.zut.utils.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+
+import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
 
 /**
  * (Cart)表服务实现类
@@ -21,6 +27,7 @@ import java.util.List;
  * @author roydon
  * @since 2022-12-17 00:18:01
  */
+@Slf4j
 @Service("cartService")
 public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements CartService {
 
@@ -58,6 +65,33 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         boolean remove = remove(cartLambdaQueryWrapper);
 
         return remove;
+    }
+
+    @Override
+    public ResponseResult addCartByUid(Cart cart) {
+
+        //取出登录用户的id
+        Integer userId = null;
+        try {
+            userId = SecurityUtils.getUserId();
+        } catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
+        cart.setUid(userId);
+        if(cart.getNum()==0){
+            cart.setNum(1);
+        }
+        //如果购物车有了此商品，就更新
+        LambdaQueryWrapper<Cart> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Cart::getUid, userId);
+        queryWrapper.eq(Cart::getGid, cart.getGid());
+
+        log.info("待加入购物车数据==>{}", cart);
+
+        saveOrUpdate(cart,queryWrapper);
+
+        return ResponseResult.okResult();
     }
 }
 
