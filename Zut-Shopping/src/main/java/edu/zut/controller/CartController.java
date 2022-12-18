@@ -1,6 +1,7 @@
 package edu.zut.controller;
 
 import edu.zut.domain.ResponseResult;
+import edu.zut.domain.entity.Cart;
 import edu.zut.service.CartService;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,11 @@ public class CartController {
     @DeleteMapping("/{cid}")
     public ResponseResult deleteCart(@PathVariable Integer cid) {
         return ResponseResult.okResult(cartService.removeCartGoodByCid(cid));
+    }
+
+    @PostMapping("/add")
+    public ResponseResult addCart(@RequestBody Cart cart){
+        return ResponseResult.okResult(cartService.addCartByUid(cart));
     }
 
 }
