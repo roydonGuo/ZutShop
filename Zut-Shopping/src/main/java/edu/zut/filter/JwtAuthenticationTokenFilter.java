@@ -1,9 +1,13 @@
 package edu.zut.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.LoginUser;
+import edu.zut.enums.AppHttpCodeEnum;
 import edu.zut.utils.JwtUtil;
 import edu.zut.utils.RedisCache;
+import edu.zut.utils.WebUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +37,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token)) {
             filterChain.doFilter(request, response);
+//            throw new SystemException(AppHttpCodeEnum.NEED_LOGIN);
             return;
         }
         //解析获取userid
@@ -42,8 +47,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             // token超时，或token非法
             e.printStackTrace();
-//            ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
-//            WebUtils.renderString(response, JSON.toJSONString(responseResult));
+            ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+            WebUtils.renderString(response, JSON.toJSONString(responseResult));
             return;
         }
         String userId = claims.getSubject();
