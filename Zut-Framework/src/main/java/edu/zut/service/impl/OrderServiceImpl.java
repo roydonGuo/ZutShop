@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
+
 /**
  * (Order)表服务实现类
  *
@@ -37,7 +39,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public ResponseResult userOrderList(Integer pageNum, Integer pageSize) {
 
         //取出登录用户的id
-        Integer userId = SecurityUtils.getUserId();
+        Integer userId =null;
+        try {
+             userId = SecurityUtils.getUserId();
+        }catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
         if (Objects.isNull(userId)) {
             //没有携带token
             throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);

@@ -12,6 +12,7 @@ import edu.zut.service.AddressService;
 import edu.zut.utils.RedisCache;
 import edu.zut.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static edu.zut.constants.SystemConstants.IS_DEFAULT;
 import static edu.zut.constants.SystemConstants.NOT_DEFAULT;
+import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
 
 /**
  * (Address)表服务实现类
@@ -52,7 +54,14 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
     @Override
     public ResponseResult addAddress(Address address) {
 
-        Integer userId = SecurityUtils.getUserId();
+        //取出登录用户的id
+        Integer userId =null;
+        try {
+            userId = SecurityUtils.getUserId();
+        }catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
         LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Address::getUid, userId);
         //如果新增为第一条地址数据，则设为默认
@@ -74,6 +83,7 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
     }
 
     @Override
+    @Transactional
     public ResponseResult setDefaultAddress(Address address) {
         LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
 

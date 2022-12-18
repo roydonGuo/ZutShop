@@ -21,12 +21,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public ResponseResult goodList(Integer pageNum, Integer pageSize) {
 
-//        LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+        //按优先级排序
+        queryWrapper.orderByDesc(Goods::getPriority);
 
         Page<Goods> page = page(new Page<>(pageNum, pageSize));
 
         return ResponseResult.okResult(page);
-
     }
 
     @Override
@@ -42,6 +43,15 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         //TODO 后续es做
 
         return goodsPage;
+    }
+
+    @Override
+    public Page<Goods> todayGoodList(Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+        //按创建时间倒序排序
+        queryWrapper.orderByDesc(Goods::getCreatedTime);
+        return page(new Page<>(pageNum, pageSize), queryWrapper);
+
     }
 }
 

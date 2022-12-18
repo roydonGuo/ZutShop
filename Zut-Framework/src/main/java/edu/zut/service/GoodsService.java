@@ -17,5 +17,7 @@ public interface GoodsService extends IService<Goods> {
     ResponseResult goodList(Integer pageNum, Integer pageSize);
 
     Page<Goods> searchGoodListByTitle(Integer pageNum, Integer pageSize, String title);
+
+    Page<Goods> todayGoodList(Integer pageNum, Integer pageSize);
 }
 

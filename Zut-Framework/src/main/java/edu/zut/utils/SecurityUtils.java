@@ -1,8 +1,11 @@
 package edu.zut.utils;
 
 import edu.zut.domain.entity.LoginUser;
+import edu.zut.exception.SystemException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
 
 public class SecurityUtils {
 
@@ -10,7 +13,14 @@ public class SecurityUtils {
      * 获取用户
      **/
     public static LoginUser getLoginUser() {
-        return (LoginUser) getAuthentication().getPrincipal();
+        LoginUser loginUser = null;
+        try {
+            loginUser =  (LoginUser) getAuthentication().getPrincipal();
+        }catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
+         return loginUser;
     }
 
     /**
