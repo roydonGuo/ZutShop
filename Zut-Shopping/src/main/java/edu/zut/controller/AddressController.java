@@ -87,4 +87,9 @@ public class AddressController {
         return ResponseResult.okResult(addressService.setDefaultAddress(address));
     }
 
+    @GetMapping("/list")
+    public ResponseResult getList(){
+        return ResponseResult.okResult(addressService.getUserAddresslist());
+    }
+
 }

@@ -33,6 +33,7 @@ public class CartController {
 
     /**
      * 根据购物车id删除购物车
+     *
      * @param cid
      * @return
      */
@@ -41,10 +42,19 @@ public class CartController {
         return ResponseResult.okResult(cartService.removeCartGoodByCid(cid));
     }
 
+    /**
+     * 添加购物车
+     *
+     * @param cart
+     * @return
+     */
     @PostMapping("/add")
-    public ResponseResult addCart(@RequestBody Cart cart){
+    public ResponseResult addCart(@RequestBody Cart cart) {
         return ResponseResult.okResult(cartService.addCartByUid(cart));
     }
+
+
+
 
 }
 
