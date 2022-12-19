@@ -79,7 +79,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
             throw new SystemException(NEED_LOGIN);
         }
         cart.setUid(userId);
-        if(cart.getNum()==0){
+        if(cart.getNum()==0||cart.getNum()==null){
             cart.setNum(1);
         }
         //如果购物车有了此商品，就更新

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.Order;
 import edu.zut.domain.entity.OrderItem;
+import edu.zut.domain.vo.CartGoodsVo;
 import edu.zut.domain.vo.OrderGoodVo;
 import edu.zut.enums.AppHttpCodeEnum;
 import edu.zut.exception.SystemException;
@@ -14,6 +15,7 @@ import edu.zut.service.OrderItemService;
 import edu.zut.service.OrderService;
 import edu.zut.utils.BeanCopyUtils;
 import edu.zut.utils.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +31,7 @@ import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
  * @author roydon
  * @since 2022-12-15 20:04:11
  */
+@Slf4j
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
 
@@ -39,10 +42,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public ResponseResult userOrderList(Integer pageNum, Integer pageSize) {
 
         //取出登录用户的id
-        Integer userId =null;
+        Integer userId = null;
         try {
-             userId = SecurityUtils.getUserId();
-        }catch (Exception e) {
+            userId = SecurityUtils.getUserId();
+        } catch (Exception e) {
             //未登录
             throw new SystemException(NEED_LOGIN);
         }
@@ -59,7 +62,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         List<Order> orderList = page.getRecords();
         //TODO 将订单包含的商品order_item封装进order
         List<OrderGoodVo> orderGoodVoList = new ArrayList<>();
-        orderList.forEach(o->{
+        orderList.forEach(o -> {
             //订单od
             Integer oid = o.getOid();
             //根据订单id查询order_item集合
@@ -86,10 +89,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Order getOrderByOid(Integer oid) {
 
         LambdaQueryWrapper<Order> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Order::getOid,oid);
+        queryWrapper.eq(Order::getOid, oid);
         Order order = getOne(queryWrapper);
 
         return order;
+    }
+
+    @Override
+    public ResponseResult createOrderByUser(List<CartGoodsVo> cartGoodsVoList) {
+
+        log.info("购物车结算生成订单数据==>{}", cartGoodsVoList);
+
+        //TODO 1.在确认订单页面选择收货地址
+
+        //TODO 1.1. 首先创建订单
+
+        //TODO 2.创建了订单，操作表order_item添加商品与订单关联
+
+        return null;
     }
 }
 

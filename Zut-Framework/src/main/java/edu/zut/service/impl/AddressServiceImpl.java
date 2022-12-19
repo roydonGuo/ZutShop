@@ -55,10 +55,10 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
     public ResponseResult addAddress(Address address) {
 
         //取出登录用户的id
-        Integer userId =null;
+        Integer userId = null;
         try {
             userId = SecurityUtils.getUserId();
-        }catch (Exception e) {
+        } catch (Exception e) {
             //未登录
             throw new SystemException(NEED_LOGIN);
         }
@@ -115,5 +115,24 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
 
         return ResponseResult.okResult();
     }
+
+    @Override
+    public List<Address> getUserAddresslist() {
+        //取出登录用户的id
+        Integer userId = null;
+        try {
+            userId = SecurityUtils.getUserId();
+        } catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
+        LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Address::getUid, userId);
+        queryWrapper.orderByDesc(Address::getIsDefault);
+        List<Address> addressList = list(queryWrapper);
+        return addressList;
+    }
+
+
 }
 

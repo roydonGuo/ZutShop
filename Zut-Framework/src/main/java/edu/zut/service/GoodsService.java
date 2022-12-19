@@ -19,5 +19,7 @@ public interface GoodsService extends IService<Goods> {
     Page<Goods> searchGoodListByTitle(Integer pageNum, Integer pageSize, String title);
 
     Page<Goods> todayGoodList(Integer pageNum, Integer pageSize);
+
+    Goods getByGid(Integer gid);
 }
 

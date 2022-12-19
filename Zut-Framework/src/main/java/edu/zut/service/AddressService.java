@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.Address;
 
+import java.util.List;
+
 
 /**
  * (Address)表服务接口
@@ -20,5 +22,7 @@ public interface AddressService extends IService<Address> {
     ResponseResult updateAddress(Address address);
 
     ResponseResult setDefaultAddress(Address address);
+
+    List<Address> getUserAddresslist();
 }
 
