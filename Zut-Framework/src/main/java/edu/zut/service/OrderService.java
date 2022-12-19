@@ -3,6 +3,9 @@ package edu.zut.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.Order;
+import edu.zut.domain.vo.CartGoodsVo;
+
+import java.util.List;
 
 
 /**
@@ -16,5 +19,7 @@ public interface OrderService extends IService<Order> {
     ResponseResult userOrderList(Integer pageNum, Integer pageSize);
 
     Order getOrderByOid(Integer oid);
+
+    ResponseResult createOrderByUser(List<CartGoodsVo> cartGoodsVoList);
 }
 
