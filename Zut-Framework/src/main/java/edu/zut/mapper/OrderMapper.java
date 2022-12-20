@@ -12,5 +12,6 @@ import edu.zut.domain.entity.Order;
  */
 public interface OrderMapper extends BaseMapper<Order> {
 
+    Integer createOrderReturnId(Order order);
 }
 

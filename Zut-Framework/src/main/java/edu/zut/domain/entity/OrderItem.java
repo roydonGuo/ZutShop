@@ -32,7 +32,7 @@ public class OrderItem {
     //商品图片
     private String image;
     //商品单价
-    private Long price;
+    private Integer price;
     //购买数量
     private Integer num;
     //创建执行人

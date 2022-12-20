@@ -11,159 +11,172 @@
                   <ColumnInfoDTO>
                     <option name="comment" value="收货地址id" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="aid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="所属用户的id" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="uid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="收货人姓名" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="name" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="省的代号" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="province" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="市的代号" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="city" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="区的代号" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="area" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="省市区的名称" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="district" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="邮政编码" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="zip" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="详细地址" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="address" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="手机" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="phone" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="固话" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="tel" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="地址类型，如：家或学校" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="tag" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="是否默认，0表示非默认 1-默认" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="isDefault" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="创建执行人" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="createdUser" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="创建时间" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="createdTime" />
                     <option name="type" value="java.util.Date" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="修改执行人" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="modifiedUser" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="修改时间" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="modifiedTime" />
                     <option name="type" value="java.util.Date" />
                   </ColumnInfoDTO>
                 </list>
               </option>
               <option name="name" value="TAddress" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Framework" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_cart">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="数据id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="cid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="归属用户的id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="uid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品的id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="gid" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品的数量" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="num" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="TCart" />
               <option name="preName" value="" />
               <option name="saveModelName" value="Zut-Framework" />
               <option name="savePackageName" value="edu.zut" />
@@ -179,33 +192,21 @@
                 <list>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="id" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="parent" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="code" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="name" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
@@ -220,7 +221,7 @@
             </TableInfoDTO>
           </value>
         </entry>
-        <entry key="zut-shop.t_order">
+        <entry key="zut-shop.t_favorites">
           <value>
             <TableInfoDTO>
               <option name="fullColumn">
@@ -231,11 +232,11 @@
                     <option name="ext">
                       <map />
                     </option>
-                    <option name="name" value="oid" />
+                    <option name="name" value="fid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="归属于那个用户" />
+                    <option name="comment" value="收藏人" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
@@ -244,79 +245,23 @@
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="收货人" />
+                    <option name="comment" value="商品id" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
                     </option>
-                    <option name="name" value="name" />
-                    <option name="type" value="java.lang.String" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="收货电话" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="phone" />
-                    <option name="type" value="java.lang.String" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="收货地址" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="address" />
-                    <option name="type" value="java.lang.String" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="订单状态 0-未支付，1-已支付，2-已取消，3-未发货" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="status" />
+                    <option name="name" value="gid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="商品总价" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="price" />
-                    <option name="type" value="java.lang.Integer" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="下单时间" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="orderTime" />
-                    <option name="type" value="java.util.Date" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="支付时间" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="payTime" />
-                    <option name="type" value="java.util.Date" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="创建执行人" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
                     </option>
                     <option name="name" value="createdUser" />
-                    <option name="type" value="java.lang.String" />
+                    <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="创建时间" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
@@ -325,16 +270,14 @@
                     <option name="type" value="java.util.Date" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="修改执行人" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
                     </option>
                     <option name="name" value="modifiedUser" />
-                    <option name="type" value="java.lang.String" />
+                    <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="修改时间" />
                     <option name="custom" value="false" />
                     <option name="ext">
                       <map />
@@ -344,7 +287,289 @@
                   </ColumnInfoDTO>
                 </list>
               </option>
+              <option name="name" value="TFavorites" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Framework" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_goods">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="分类id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="categoryId" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品系列" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="itemType" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品标题" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="title" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品卖点" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="sellPoint" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品单价" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="price" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="库存数量" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="num" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="条形码" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="barcode" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="图片路径" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="image" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品状态  1：上架   2：下架   3：删除" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="status" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="显示优先级" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="priority" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后修改时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="最后修改人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="TGoods" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Framework" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_order">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="oid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="归属于那个用户" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="uid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="收货人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="name" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="收货电话" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="phone" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="收货地址" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="address" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="订单状态 0-未支付，1-已支付，2-已取消，3-未发货" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="status" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品总价" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="price" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="下单时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="orderTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="支付时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="payTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
               <option name="name" value="TOrder" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Framework" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_order_item">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="id" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="归属的订单oid" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="oid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品gid" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="gid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品名称" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="title" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品图片" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="image" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="商品单价" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="price" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="购买数量" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="num" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="createdTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改执行人" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedUser" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="修改时间" />
+                    <option name="custom" value="false" />
+                    <option name="name" value="modifiedTime" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="TOrderItem" />
               <option name="preName" value="" />
               <option name="saveModelName" value="Zut-Framework" />
               <option name="savePackageName" value="edu.zut" />

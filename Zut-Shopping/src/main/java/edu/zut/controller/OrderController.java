@@ -2,12 +2,11 @@ package edu.zut.controller;
 
 
 import edu.zut.domain.ResponseResult;
-import edu.zut.domain.vo.CartGoodsVo;
+import edu.zut.domain.dto.OrderDto;
 import edu.zut.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * (Order)表控制层
@@ -49,12 +48,12 @@ public class OrderController {
     /**
      * 用户在购物车选择商品数据，生成订单
      *
-     * @param cartGoodsVoList List<CartGoodsVo>
+     * @param orderAddressGoodsDto
      * @return ResponseResult
      */
     @PostMapping("/create")
-    public ResponseResult createOrder(@RequestBody List<CartGoodsVo> cartGoodsVoList) {
-        return ResponseResult.okResult(orderService.createOrderByUser(cartGoodsVoList));
+    public ResponseResult createOrder(@RequestBody OrderDto orderAddressGoodsDto) {
+        return ResponseResult.okResult(orderService.createOrderByUser(orderAddressGoodsDto));
     }
 
 

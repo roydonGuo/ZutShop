@@ -18,6 +18,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             e.printStackTrace();
             userId = -1;//表示是自己创建
         }
+        this.setFieldValByName("orderTime", new Date(), metaObject);
         this.setFieldValByName("createdTime", new Date(), metaObject);
         this.setFieldValByName("createdUser",userId , metaObject);
         this.setFieldValByName("modifiedTime", new Date(), metaObject);

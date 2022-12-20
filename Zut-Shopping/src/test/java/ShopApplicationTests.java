@@ -9,6 +9,7 @@ import edu.zut.domain.vo.Area;
 import edu.zut.domain.vo.CartGoodsVo;
 import edu.zut.domain.vo.City;
 import edu.zut.domain.vo.Province;
+import edu.zut.mapper.OrderMapper;
 import edu.zut.service.*;
 import edu.zut.utils.BeanCopyUtils;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static edu.zut.constants.SystemConstants.ORDER_CREATED;
 
 /**
  * Author: roydon - 2022/12/12
@@ -33,6 +36,8 @@ public class ShopApplicationTests {
     private GoodsService goodsService;
     @Resource
     private CartService cartService;
+    @Resource
+    private OrderMapper orderMapper;
     @Resource
     private PasswordEncoder passwordEncoder;
 
@@ -132,6 +137,13 @@ public class ShopApplicationTests {
     void getUserCart() {
         List<CartGoodsVo> cartGoodsVoList = cartService.userCartGoodList(1);
         cartGoodsVoList.forEach(System.out::println);
+    }
+
+    @Test
+    void createOrderTest() {
+
+
+
     }
 
 }
