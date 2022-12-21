@@ -55,11 +55,16 @@ public class UserController {
         return ResponseResult.okResult(userService.updatePwd(userDto));
     }
 
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/update")
     public ResponseResult updateUser(@RequestBody User user) {
         return ResponseResult.okResult(userService.updateUserInfo(user));
     }
-
 
 
 }

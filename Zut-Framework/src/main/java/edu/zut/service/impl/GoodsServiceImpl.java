@@ -35,7 +35,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         //按优先级排序
         queryWrapper.orderByDesc(Goods::getPriority);
         Page<Goods> page = page(new Page<>(pageNum, pageSize));
-        //TODO 将查询出的商品保存到redis
 
         return ResponseResult.okResult(page);
 
@@ -50,8 +49,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         queryWrapper.orderByDesc(Goods::getPriority);
 
         Page<Goods> goodsPage = page(new Page<>(pageNum, pageSize), queryWrapper);
-
-        //TODO 后续es做
 
         return goodsPage;
     }

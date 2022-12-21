@@ -56,8 +56,7 @@ public class GoodsController {
      */
     @GetMapping("/today")
     public ResponseResult todayGood(@RequestParam Integer pageNum,
-                                    @RequestParam Integer pageSize
-    ) {
+                                    @RequestParam Integer pageSize) {
         return ResponseResult.okResult(goodsService.todayGoodList(pageNum, pageSize));
 
     }

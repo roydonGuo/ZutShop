@@ -58,6 +58,7 @@ public class AddressController {
 
     /**
      * 批量删除收货地址
+     *
      * @param aids
      * @return
      */
@@ -69,6 +70,7 @@ public class AddressController {
 
     /**
      * 更新地址
+     *
      * @param address
      * @return
      */
@@ -79,16 +81,22 @@ public class AddressController {
 
     /**
      * 设为默认
+     *
      * @param address
      * @return
      */
     @PostMapping("/setDefault")
-    public ResponseResult setDefault(@RequestBody Address address){
+    public ResponseResult setDefault(@RequestBody Address address) {
         return ResponseResult.okResult(addressService.setDefaultAddress(address));
     }
 
+    /**
+     * 非分页查询用户地址
+     *
+     * @return
+     */
     @GetMapping("/list")
-    public ResponseResult getList(){
+    public ResponseResult getList() {
         return ResponseResult.okResult(addressService.getUserAddresslist());
     }
 

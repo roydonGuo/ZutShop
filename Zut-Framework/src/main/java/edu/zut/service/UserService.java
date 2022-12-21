@@ -7,9 +7,9 @@ import edu.zut.domain.entity.User;
 
 
 /**
- * (TUser)表服务接口
+ * (User)表服务接口
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-12 10:08:32
  */
 public interface UserService extends IService<User> {

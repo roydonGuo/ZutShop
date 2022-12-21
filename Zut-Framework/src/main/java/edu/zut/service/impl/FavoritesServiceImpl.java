@@ -67,5 +67,24 @@ public class FavoritesServiceImpl extends ServiceImpl<FavoritesMapper, Favorites
 
 
     }
+
+    @Override
+    public boolean addFavorites(Integer gid) {
+
+        //取出登录用户的id
+        Integer userId = null;
+        try {
+            userId = SecurityUtils.getUserId();
+        } catch (Exception e) {
+            //未登录
+            throw new SystemException(NEED_LOGIN);
+        }
+        Favorites favorites = new Favorites();
+        favorites.setGid(gid);
+        favorites.setUid(userId);
+        boolean saveOrUpdate = saveOrUpdate(favorites);
+
+        return saveOrUpdate;
+    }
 }
 

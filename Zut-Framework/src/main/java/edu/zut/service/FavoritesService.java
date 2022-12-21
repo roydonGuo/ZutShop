@@ -15,5 +15,7 @@ import edu.zut.domain.entity.Goods;
 public interface FavoritesService extends IService<Favorites> {
 
     Page<Goods> favoritesList(Integer pageNum, Integer pageSize);
+
+    boolean addFavorites(Integer gid);
 }
 

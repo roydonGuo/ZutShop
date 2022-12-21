@@ -1,0 +1,25 @@
+server:
+  port: 7778
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zut-shop?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+alipay:
+  appId: 2021000121699227
+  appPrivateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCT8LVLGfV3eJXPQTBU+pVZ4ZI9f+VStN9gYBu+75ECMn2N5cQPjNq+RMM4sZGSB1YS8J0eTQ4CD/m5jhMcO8oPi4TuZFt7Yq6oB5HfUYPNDbjJqukwetpleDbJartlieNTMqMJNXxvc3cfkEiXgbVi1M2b0wLF5eTx4QXn7Sdom+uZ1DFel73Ij66qKcixSHlUSr+F8cR6idYvOIn0q+Z27SJrt3VDSHCg/M3eGkrWbJTbU+WiphVbdLp9uCQ9XnNiPN4kMmTfPzk9gGy53QgWQq7i38Qj6UdD6RV9S7Vg4P3Yrj3GHW8s4x2nhhHErRQ78nvkI5u6yGQkDxPQwLCvAgMBAAECggEAWafF5uareSTN/VVvWgCmpFrsynKI4q+UtA5qojMDOUaqCmWVhSsCoc6AVQpfwxTJGB9TyLo/5AYUfFxavoCJexQ9kk+llUf/uvsjbygybQGE3ErEmUnKszXAVh5lxSpkZtZIMduFNvHN3oYNSCwmZee7V1Tw2EfzkJajgqOZf24anI7+fQh5bcgiUNzoiL4Dy2ykqZUu5AFS+cqtt7eedq3CkFERqyAUkF4ONczUF18hhnRUat6ruZFoC+4NSydjpkeQ1JXnu/kzZ5Ac9qWYFbLm84jaUn4cvFBT0nKK7XWoLqO3BjZd/yKCJJN3pxn2OUjNumOD6EC9DtucrQVLCQKBgQDMBvDn43o0mOx2fsbxiyQPulmBWcdzYlMAW00h/H7iY0EcdJgiFkcyo+I/UoR5JTZiXkvJspvKP3DJ/550L6WOxmbLza69/qc45Xm1xFkAIk2XBTapn4lN36E+4y/RPXeI3D9jav6bnZriJr9qV17kg9ALrXPOHyMjKBDFwFQocwKBgQC5oDhKlTuyxX6EfEVApyJxcVunGwBsexGrh/DmpG6yCQkIIxIjJfsTYV+9fVB9rCnShBwhR59bZVvq/ggzCIrBs5SXDUs+jLEXdZUZ4ZoIGWz/H/Rw0kynvhY4GydtJwl7+J/ULNGybRJ0eaSqNTLtBMJ54yF9ITNgm+x+BzuT1QKBgDbyf5rUBqt3q+dVyVpv8KxTsZtGhJKsnlHwRNusVre9p2F0fSxg95fJzzrijE7cGMNxRdPySEa1wziDoTcFRf8nq7OjlzYQCRUnqBmt4ZJJqr/LZadVEfNpENIQ+WXOugyf1Gp//EYIshfJ+682DJZacYNTmWafuCTVu36mh4PFAoGASgtNKQMKQy9gXjyr6zRAGvxa0PeGXb9htwiM4ZOpzD6qaaKDs52M35gx9oYsO1UXga/NAMFvIaf22G/omWLI5qdZmD9nSlYYtgDjLuW86Yoq3kHC4dYhWbALcOnz+iheMiNkreAK7Z9wgyGau4JpA/6oDLK7QwyhT+IincsIytkCgYEAmoDobrW7KjwqmbMD4Z3lR0sC7ZIZAV3kdPJeJKflMLKpLYw/ic18B0UR1V0BTwo4L6IzKsafFmueHx5MOfWcVn7brHaofWynsh0sjH095LMG/vp9IsUdo4PM4K+ugp9epk3wV8dAdiHz9IOWRW4aC3P6h+U3CCwrlrYl4eiGiVQ=
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4VDQHUqss3KGX2kI6tpYGYJLneckq4SLKLcbTsInJnNwTgMQ33N4pdCLc3fO602Hm58zWyDqxH7DKotfe6kwByxbsFO1HOkPWOX/k7sw4Eo3xH/52fYXgHS+rR7417e0BHtV6McC89KENVGmbKxuhRs/Eh1YAWaxsPG0aw69nqMBtEc0jy2bksAbmjizif+d4YPAHL/MsGRtsM8RIVOmbztKHBd78WVbMWXkUYhUv0WPkFCAU+t0CHufo+la6zwM92OejRWWDni05fwCORCr8H9ekloScZCW+Xvw787kze6YlL7kxZWuYwrKTXGP77zrZpViiu9K2x+ZeaI7DcT2awIDAQAB
+  notifyUrl: http://33i2db.natappfree.cc/alipay/notify

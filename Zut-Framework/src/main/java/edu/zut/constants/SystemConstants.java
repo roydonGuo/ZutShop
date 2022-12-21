@@ -35,4 +35,9 @@ public class SystemConstants {
     public static final Integer ORDER_CANCEL = 2;
     public static final Integer ORDER_NOT_DELIVERED = 3;
 
+    /**
+     * 订单中的商品已签收
+     */
+    public static final Integer GOODS_SURE_RECEIVE = 4;
+
 }

@@ -111,7 +111,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     @Transactional
-    public ResponseResult createOrderByUser(OrderDto orderDto) {
+    public Order createOrderByUser(OrderDto orderDto) {
 
         log.info("购物车结算生成订单数据==>{}", orderDto);
         //(OrderDto(oid=null, uid=null, aid=21, price=39811,
@@ -181,7 +181,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             cartService.remove(cartQueryWrapper);
         });
 
-        return ResponseResult.okResult();
+        log.info("生成了订单==>{}",order);
+
+        return order;
     }
+
+
 }
 

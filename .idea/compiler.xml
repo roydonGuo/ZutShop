@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Zut-Framework" />
+        <module name="Zut-Payment" />
         <module name="Zut-Shopping" />
       </profile>
     </annotationProcessing>

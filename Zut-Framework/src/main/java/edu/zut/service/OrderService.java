@@ -18,6 +18,8 @@ public interface OrderService extends IService<Order> {
 
     Order getOrderByOid(Integer oid);
 
-    ResponseResult createOrderByUser(OrderDto orderAddressGoodsDto);
+    Order createOrderByUser(OrderDto orderAddressGoodsDto);
+
+
 }
 

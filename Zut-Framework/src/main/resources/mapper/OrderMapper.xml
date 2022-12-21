@@ -13,4 +13,5 @@
                 #{price},
                 #{status})
     </insert>
+
 </mapper>

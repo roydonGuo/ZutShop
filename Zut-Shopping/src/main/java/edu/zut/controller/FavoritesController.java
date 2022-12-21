@@ -3,10 +3,7 @@ package edu.zut.controller;
 
 import edu.zut.domain.ResponseResult;
 import edu.zut.service.FavoritesService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -18,13 +15,25 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/favorites")
-public class FavoritesController  {
+public class FavoritesController {
 
     @Resource
     private FavoritesService favoritesService;
 
     /**
+     * 添加商品收藏
+     *
+     * @param gid
+     * @return
+     */
+    @PostMapping("/add")
+    public ResponseResult add(@RequestBody Integer gid) {
+        return ResponseResult.okResult(favoritesService.addFavorites(gid));
+    }
+
+    /**
      * 收藏商品列表
+     *
      * @param pageNum
      * @param pageSize
      * @return
@@ -33,6 +42,7 @@ public class FavoritesController  {
     public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         return ResponseResult.okResult(favoritesService.favoritesList(pageNum, pageSize));
     }
+
 
 }
 

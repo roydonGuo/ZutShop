@@ -1,6 +1,7 @@
 package edu.zut.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.OrderItem;
 
 
@@ -12,5 +13,6 @@ import edu.zut.domain.entity.OrderItem;
  */
 public interface OrderItemService extends IService<OrderItem> {
 
+    ResponseResult delOrderItem(OrderItem orderItem);
 }
 

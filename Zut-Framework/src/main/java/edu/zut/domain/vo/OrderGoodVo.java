@@ -23,6 +23,8 @@ public class OrderGoodVo {
     private String name;
     //下单时间
     private Date orderTime;
+    //是否发货
+    private Integer status;
     //集合
     private List<OrderItem> orderItemList;
 }
