@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：命名空间，指向的就是对应接口的全限定名-->
+<mapper namespace="edu.zut.mapper.UserMapper">
+
+
+    <select id="selectRoleByUid" resultType="java.lang.String">
+        select r.role
+        from t_user_role ur
+                 left join `t_user` u on ur.`uid` = u.`uid`
+                 left join `t_role` r on ur.`rid` = r.`rid`
+        where ur.uid = #{uid}
+    </select>
+</mapper>
