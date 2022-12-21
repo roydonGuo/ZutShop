@@ -1,12 +1,17 @@
 # ZutShop
 Junior practical training project
 
+> 本人大三做的实训项目，先后端分离。
+> 前端使用Vue，前端项目地址：[https://github.com/roydonGuo/ZutShop-Vue](https://github.com/roydonGuo/ZutShop-Vue)
+
+
 ---
 
 # 0. 项目介绍
 
 项目名称：学子商城。类似于购物车系统、订单系统。前后端分离。
-![image-20221216114347640](./doc-img/image-20221216114347640.png)
+
+![image-20221220212423993](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211726177.png)
 
 分析项目：
 
@@ -40,25 +45,23 @@ Junior practical training project
 
 针对本项目，数据库设计如下：
 
-![image-20221213094711373](z-img/image-20221213094711373.png)
+![image-20221213094711373](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211732078.png)
 
 sql文件在项目resources中。
 
 # 2. 项目准备
 
-本项目使用springboot框架进行开发，ajax进行前后端交互。所以，涉及到的技术栈有：
+本项目使用springboot框架进行后台开发，前端使用Vue开发，axios进行前后端交互。所以，涉及到的技术栈有：
 
 * springboot
 * springSecurity
 * maven
-* ajax、jQ
 * redis
-
 * mybatis-plus
+* Vue，axios
 
 ## 2.1 创建maven项目
 
-采用业务分离开发
 
 
 父工程管理依赖：
@@ -954,7 +957,7 @@ public class SwaggerConfig {
 
 具体使用可参考官方网站，或前往：[http://c.biancheng.net/view/5532.html](http://c.biancheng.net/view/5532.html)
 
-![image-20221213205613086](z-img/image-20221213205613086.png)
+![image-20221213205613086](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211735392.png)
 
 ## 2.7 SpringSecurity配置
 
@@ -1372,11 +1375,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 Apifox测试登录接口：
 
-![image-20221213214122124](z-img/image-20221213214122124.png)
+![image-20221213214122124](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736425.png)
 
 redis也成功存入数据
 
-![image-20221213214223209](z-img/image-20221213214223209.png)
+![image-20221213214223209](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736944.png)
 
 ### 3.1.2 登出
 
@@ -1414,7 +1417,7 @@ public ResponseResult logout() {
 
 前端页面：
 
-![image-20221213214640730](z-img/image-20221213214640730.png)
+![image-20221220212533109](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736151.png)
 
 ### 3.2.1 需求分析
 
@@ -1422,7 +1425,7 @@ public ResponseResult logout() {
 
 * 前端传入数据格式：(json){ 'username': username, 'password': password }
 
-* 请求地址：/uesr/register
+* 请求地址：`/uesr/register`
 
 ### 3.2.2 后端实现
 
@@ -1538,9 +1541,1024 @@ public class BeanCopyUtils {
 
 前端页面：
 
-![image-20221213220239933](z-img/image-20221213220239933.png)
+![image-20221220212607942](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736149.png)
 
 ### 3.3.1 需求分析
+
+前端提供表单，表单内容包括用户名，原密码和新密码。在前端还会进行确认新密码的校验工作。当然，校验只放在前端即可。
+
+![image-20221221173833197](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211738518.png)
+
+* 前端传入数据格式：
+
+> {
+>
+> ​	"username": "roydon",
+>
+> ​	"password": "123456",
+>
+> ​	"confirmPassword": "111111"
+>
+> }
+
+发现前端传入数据与后端的`User`实体类字段数量相差甚远，甚至还有后端没有的字段。这就需要后端设计一个新的用于前后端进行数据传输的对象（DTO）命名为`UserDto`。
+
+* 请求地址：`post("/user/password")`
+
+
+
+### 3.3.2 后端实现
+
+①新建`UserDto`实体类用来接收前端传入的数据，他屏蔽了大量的用户隐私信息。
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(description = "注册用户dto")
+public class UserDto {
+
+    //用户名
+    private String username;
+    //原密码
+    private String password;
+    //新密码
+    private String newPassword;
+
+}
+```
+
+②控制层`UserController`编写一个接口
+
+```java
+/**
+ * 修改密码
+ *
+ * @param userDto
+ * @return
+ */
+@PostMapping("/password")
+public ResponseResult update(@RequestBody UserDto userDto) {
+    return ResponseResult.okResult(userService.updatePwd(userDto));
+}
+```
+
+③业务层实现修改密码方法
+
+```java
+ResponseResult updatePwd(UserDto userDto);
+```
+
+```java
+@Override
+public ResponseResult updatePwd(UserDto userDto) {
+    //非空判断
+    if (StringUtils.isEmpty(userDto.getPassword())) {
+        throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_NULL);
+    }
+    //取出登录用户的id
+    Integer userId =null;
+    try {
+        userId = SecurityUtils.getUserId();
+    }catch (Exception e) {
+        //未登录
+        throw new SystemException(NEED_LOGIN);
+    }
+    if(Objects.isNull(userId)){
+        //没有携带token
+        throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+    }
+    //查询用户
+    LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(User::getUid, userId);
+    User one = getOne(queryWrapper);
+    //判断输入密码是否与数据库相同
+    boolean matches = passwordEncoder.matches(userDto.getPassword(),one.getPassword());
+    if (!matches) {
+        //不存在用户
+        throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_MATCH);
+    }
+    //从redis中获取用户信息
+    LoginUser loginUser = redisCache.getCacheObject(LOGIN_USER_KEY + userId);
+    //如果redis获取不到
+    if (Objects.isNull(loginUser)) {
+        throw new RuntimeException("用户未登录");
+    }
+    //新密码加密
+    String encodePassword = passwordEncoder.encode(userDto.getNewPassword());
+    User user = loginUser.getUser();
+    user.setPassword(encodePassword);
+    log.info("修改后的用户：{}",user);
+    redisCache.setCacheObject(LOGIN_USER_KEY + userId,new LoginUser(user) );
+    return ResponseResult.okResult(update(user,queryWrapper));
+}
+```
+
+## 3.4 更新用户信息
+
+### 3.4.1 需求分析
+
+![image-20221221175300012](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211803135.png)
+
+提供一个表单，即是展示用户信息的页面，也可直接进行修改，以及头像的上传。
+
+* 前端接口：`post("/user/update")`
+
+### 3.4.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 更新用户信息
+ *
+ * @param user
+ * @return
+ */
+@PostMapping("/update")
+public ResponseResult updateUser(@RequestBody User user) {
+    return ResponseResult.okResult(userService.updateUserInfo(user));
+}
+```
+
+②业务层
+
+```java
+ResponseResult updateUserInfo(User user);
+```
+
+```java
+@Override
+public ResponseResult updateUserInfo(User user) {
+    LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(User::getUid,user.getUid());
+    redisCache.setCacheObject(LOGIN_USER_KEY + user.getUid(), new LoginUser(user));
+    return ResponseResult.okResult(update(user,queryWrapper));
+}
+```
+
+## 3.5 头像上传
+
+### 3.5.1 需求分析
+
+紧接着上面修改用户信息步骤，此次需求为修改用户头像。
+
+* 前端接口：`http://localhost:7777/file/upload`
+
+### 3.5.2 后端实现
+
+①头像存储使用七牛云的对象存储服务，前往官网[https://portal.qiniu.com/kodo/bucket](https://portal.qiniu.com/kodo/bucket)。
+
+注册完用户并登录，打开控制台选择存储空间：
+
+![image-20221221180315679](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211803427.png)
+
+选择新建空间，访问权限最好设置为公开，名称随意：
+
+![image-20221221180406779](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211804134.png)
+
+创建好存储空间，七牛云会给此空间提供一个为期三十天的测试域名，也就是说，你上传了图片，可以根据·此测试域名和图片名称访问此网络图片。
+
+点开右上角个人头像创建密钥。
+
+![image-20221221180918673](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211809654.png)
+
+②项目引入依赖，在Framework工程引入依赖
+
+```xml
+<!--七牛云存储-->
+<dependency>
+    <groupId>com.qiniu</groupId>
+    <artifactId>qiniu-java-sdk</artifactId>
+    <version>[7.7.0, 7.7.99]</version>
+</dependency>
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.9.0</version>
+</dependency>
+```
+
+添加配置
+
+```yml
+oss: #七牛云对象存储
+  accessKey: 5QiJ****************WX-_O3i
+  secretKey: S6t****************FTkFWx51
+  bucket: zut-shop-avatar # 空间名称
+```
+
+③控制层`FileController`
+
+```java
+@PostMapping("/upload")
+public ResponseResult uploadFile(@RequestParam MultipartFile file) {
+    //头像上传
+    return ResponseResult.okResult(fileService.uploadImg(file));
+}
+```
+
+④业务层
+
+```java
+ResponseResult uploadImg(MultipartFile file);
+```
+
+```java
+@Data
+@Slf4j
+@Service
+//@ConfigurationProperties(prefix = "oss")
+public class FileServiceImpl implements FileService {
+
+    @Override
+    public ResponseResult uploadImg(MultipartFile file) {
+
+        String originalFilename = file.getOriginalFilename();
+        //对原始文件名进行判断
+//        if(!originalFilename.endsWith(".png")){
+//            throw new SystemException(AppHttpCodeEnum.FILE_TYPE_ERROR);
+//        }
+        //上传文件到OSS
+        assert originalFilename != null;
+        String filePath = PathUtils.generateFilePath(originalFilename);
+        String url = uploadOss(file, filePath);
+
+        log.info("图片上传地址：{}", url);
+
+        return ResponseResult.okResult(url);
+    }
+
+    @Value("${oss.accessKey}")
+    private String accessKey;
+
+    @Value("${oss.secretKey}")
+    private String secretKey;
+
+    @Value("${oss.bucket}")
+    private String bucket;
+
+    private String uploadOss(MultipartFile imgFile, String filePath) {
+        //构造一个带指定 Region 对象的配置类
+        Configuration cfg = new Configuration(Region.autoRegion());
+        //...其他参数参考类注释
+        UploadManager uploadManager = new UploadManager(cfg);
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        String key = filePath;
+        try {
+            InputStream inputStream = imgFile.getInputStream();
+            Auth auth = Auth.create(accessKey, secretKey);
+            String upToken = auth.uploadToken(bucket);
+            try {
+                Response response = uploadManager.put(inputStream, key, upToken, null, null);
+                //解析上传成功的结果
+                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+                System.out.println(putRet.key);
+                System.out.println(putRet.hash);
+                return "http://rm*******d-bkt.clouddn.com/" + key;//换成你自己的测试域名
+            } catch (QiniuException ex) {
+                Response r = ex.response;
+                System.err.println(r.toString());
+                try {
+                    System.err.println(r.bodyString());
+                } catch (QiniuException ex2) {
+                    //ignore
+                }
+            }
+        } catch (Exception ex) {
+            //ignore
+        }
+        return "www";
+    }
+
+}
+```
+
+# 4. 收货地址管理
+
+## 4.1 增加收货地址
+
+### 4.1.1 需求分析
+
+![image-20221221183956994](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211839274.png)
+
+* 前端传入：`Address`实体
+
+* 请求方式：`post("/address/add")`
+
+### 4.1.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 新增收货地址
+ *
+ * @param address
+ * @return
+ */
+@PostMapping("/add")
+public ResponseResult addAddress(@RequestBody Address address) {
+    return ResponseResult.okResult(addressService.addAddress(address));
+}
+```
+
+②业务层
+
+```java
+ @Override
+public ResponseResult addAddress(Address address) {
+    //取出登录用户的id
+    Integer userId =  SecurityUtils.getUserId();
+    LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Address::getUid, userId);
+    //如果新增为第一条地址数据，则设为默认
+    if (count(queryWrapper) < 1) {
+        address.setIsDefault(IS_DEFAULT);
+    }
+    address.setUid(SecurityUtils.getUserId());
+    save(address);
+    return ResponseResult.okResult();
+}
+```
+
+## 4.2 查询收货地址
+
+### 4.2.1 需求分析
+
+* 前端传入分页参数：@RequestParam Integer pageNum, @RequestParam Integer pageSize
+* 请求地址：`get("/address/page")`
+
+### 4.2.2 后端实现
+
+① 控制层
+
+```java
+/**
+* 分页查询用户收货地址数据
+*
+* @param pageNum
+* @param pageSize
+* @return
+*/
+GetMapping("/page")
+ublic ResponseResult selectAllAddress(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+   return ResponseResult.okResult(addressService.userAddressList(pageNum, pageSize));
+}
+```
+
+② 业务层，前期已经配置好MP分页插件。
+
+```java
+@Override
+public ResponseResult userAddressList(Integer pageNum, Integer pageSize) {
+    //取出登录用户的id
+    Integer userId = SecurityUtils.getUserId();
+    if (Objects.isNull(userId)) {
+        //没有携带token
+        throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+    }
+    LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Address::getUid, userId);
+
+    Page<Address> page = page(new Page<>(pageNum, pageSize), queryWrapper);
+
+    return ResponseResult.okResult(page);
+}
+```
+
+## 4.3 编辑收货地址
+
+### 4.3.1 需求分析
+
+![image-20221221184024156](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211840477.png)
+
+* 前端传入`Address`实体
+* 请求地址：`post("/address/update")`
+
+### 4.3.2 后端实现
+
+①控制层
+
+```java
+/**
+  * 更新地址
+  *
+  * @param address
+  * @return
+  */
+ @PostMapping("/update")
+ public ResponseResult update(@RequestBody Address address) {
+     return ResponseResult.okResult(addressService.updateAddress(address));
+ }
+```
+
+②业务层
+
+```java
+@Override
+public ResponseResult updateAddress(Address address) {
+    LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Address::getAid, address.getAid());
+    update(address, queryWrapper);
+    return ResponseResult.okResult();
+}
+```
+
+## 4.4 删除收货地址
+
+### 4.4.1 需求分析
+
+前端传入地址id，后端根据地址id删除
+
+* 请求地址：`delete("/address/{aid}")`
+
+### 4.4.2 后端实现
+
+①控制层直接调用构造器删除
+
+```java
+ /**
+ * 删除地址数据
+ *
+ * @param aid
+ * @return
+ */
+@DeleteMapping("/{aid}")
+public ResponseResult delete(@PathVariable Integer aid) {
+    LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Address::getAid, aid);
+    return ResponseResult.okResult(addressService.remove(queryWrapper));
+}
+```
+
+## 4.5 收货地址设为默认
+
+### 4.5.1 需求分析
+
+当购买商品准备结算时，会有选择收货地址选项，设置默认收货地址下次购物直接忽略选择地址这一选项方便用户操作，优化用户体验。
+
+* 前端传入数据格式为`Address实体类`
+* 请求接口：`post("/address/setDefault")`
+
+### 4.5.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 设为默认
+ *
+ * @param address
+ * @return
+ */
+@PostMapping("/setDefault")
+public ResponseResult setDefault(@RequestBody Address address) {
+    return ResponseResult.okResult(addressService.setDefaultAddress(address));
+}
+```
+
+②业务层
+
+此处需要多次操作数据库，加个`@Transactional`注解，自动回滚事务，保证数据库执行此方法的前后一致性。
+
+```java
+@Override
+@Transactional
+public ResponseResult setDefaultAddress(Address address) {
+    LambdaQueryWrapper<Address> queryWrapper = new LambdaQueryWrapper<>();
+    //地址默认改为非默认
+    if (address.getIsDefault().equals(NOT_DEFAULT)) {
+        address.setIsDefault(NOT_DEFAULT);
+        queryWrapper.eq(Address::getAid, address.getAid());
+        update(address, queryWrapper);
+        return ResponseResult.okResult();
+    }
+    //先全部改为默认状态
+    queryWrapper.eq(Address::getUid, SecurityUtils.getUserId());
+    //用户的全部地址数据
+    List<Address> addressList = list(queryWrapper);
+    //过滤出默认地址,理论为一个
+    List<Address> collect = addressList.stream().filter(a ->
+            a.getIsDefault().equals(IS_DEFAULT)
+    ).collect(Collectors.toList());
+    collect.forEach(a -> {
+        a.setIsDefault(NOT_DEFAULT);
+        queryWrapper.eq(Address::getAid, a.getAid());
+        update(a, queryWrapper);
+    });
+    //最后将选择修改的非默认地址改为默认
+    LambdaQueryWrapper<Address> queryWrapper2 = new LambdaQueryWrapper<>();
+    queryWrapper2.eq(Address::getAid, address.getAid());
+    address.setIsDefault(IS_DEFAULT);
+    update(address, queryWrapper2);
+
+    return ResponseResult.okResult();
+}
+```
+
+# 5. 首页完善
+
+![image-20221221184202762](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211842126.png)
+
+
+
+## 5.1 添加今日热销栏
+
+### 5.1.1 需求分析
+
+* 前端负责渲染，后端只需根据商品表的修改时间字段进行查找，并制定查找条数。
+
+### 5.1.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 今日热销
+ *
+ * @param pageNum
+ * @param pageSize
+ * @return
+ */
+@GetMapping("/today")
+public ResponseResult todayGood(@RequestParam Integer pageNum,
+                                @RequestParam Integer pageSize) {
+    return ResponseResult.okResult(goodsService.todayGoodList(pageNum, pageSize));
+}
+```
+
+②业务层
+
+```java
+@Override
+public Page<Goods> todayGoodList(Integer pageNum, Integer pageSize) {
+    //查询redis
+    Page<Goods> todayGoodsList = redisCache.getCacheObject(TODAY_GOODS_KEY + pageNum);
+    if (todayGoodsList == null) {
+        LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+        //按创建时间倒序排序
+        queryWrapper.orderByDesc(Goods::getCreatedTime);
+        Page<Goods> goodsPage = page(new Page<>(pageNum, pageSize), queryWrapper);
+        //TODO 存入redis
+        redisCache.setCacheObject(TODAY_GOODS_KEY + pageNum, goodsPage, TODAY_GOODS_TTL, TimeUnit.MINUTES);
+        return goodsPage;
+    } else {
+        return todayGoodsList;
+    }
+}
+```
+
+## 5.2 商品展示页
+
+### 5.2.1 需求分析
+
+![image-20221221184759925](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211848413.png)
+
+分页查询出商品及和，前端负责渲染
+
+### 5.2.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 分页查询所有商品【暂行方案】
+ *
+ * @param pageNum
+ * @param pageSize
+ * @return
+ */
+@GetMapping("/list")
+public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    return ResponseResult.okResult(goodsService.goodList(pageNum, pageSize));
+}
+```
+
+②业务层
+
+```java
+@Override
+public ResponseResult goodList(Integer pageNum, Integer pageSize) {
+    LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+    //按优先级排序
+    queryWrapper.orderByDesc(Goods::getPriority);
+    Page<Goods> page = page(new Page<>(pageNum, pageSize));
+    return ResponseResult.okResult(page);
+}
+```
+
+## 5.3 商品搜索
+
+### 5.3.1 需求分析
+
+前端在输入框输入商品名称，后端根据输入名称进行模糊查询并返回商品集合。
+
+### 5.3.2 后端实现
+
+①控制层
+
+```java
+ /**
+ * 根据商品名模糊搜索,并分页
+ *
+ * @param title 商品名
+ * @return ResponseResult
+ */
+@GetMapping("/search")
+public ResponseResult searchGood(@RequestParam Integer pageNum,
+                                 @RequestParam Integer pageSize,
+                                 @RequestParam String title) {
+    return ResponseResult.okResult(goodsService.searchGoodListByTitle(pageNum, pageSize, title));
+}
+```
+
+②业务层
+
+```java
+@Override
+public Page<Goods> searchGoodListByTitle(Integer pageNum, Integer pageSize, String title) {
+    LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.like(Goods::getTitle, title);
+    //按优先级排序
+    queryWrapper.orderByDesc(Goods::getPriority);
+    Page<Goods> goodsPage = page(new Page<>(pageNum, pageSize), queryWrapper);
+    return goodsPage;
+}
+```
+
+## 5.4 商品收藏
+
+### 5.4.1 需求分析
+
+点击商品页加入收藏按钮添加到我的收藏中。
+
+### 5.4.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 添加商品收藏
+ *
+ * @param gid
+ * @return
+ */
+@PostMapping("/add")
+public ResponseResult add(@RequestBody Integer gid) {
+    return ResponseResult.okResult(favoritesService.addFavorites(gid));
+}
+```
+
+②业务层
+
+```java
+@Override
+public boolean addFavorites(Integer gid) {
+    //取出登录用户的id
+    Integer userId = SecurityUtils.getUserId();
+    Favorites favorites = new Favorites();
+    favorites.setGid(gid);
+    favorites.setUid(userId);
+    boolean saveOrUpdate = saveOrUpdate(favorites);
+    return saveOrUpdate;
+}
+```
+
+
+
+# 6. 订单管理
+
+![image-20221221185417592](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211854782.png)
+
+## 6.1 查询订单列表
+
+### 6.1.1 需求分析
+
+查询出用户的所有订单，并根据订单的oid关联查询订单包含的商品集合。
+
+此时需要一个实体类封装传输数据既包含订单信息，也包含订单商品集合信息。
+
+### 6.1.2 后端实现
+
+①新建`OrderGoodVo`实体类
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderGoodVo {
+
+    private Integer oid;
+    //归属于那个用户
+    private Integer uid;
+    //收货人
+    private String name;
+    //下单时间
+    private Date orderTime;
+    //是否发货
+    private Integer status;
+    //集合
+    private List<OrderItem> orderItemList;
+}
+```
+
+②控制层
+
+```java
+/**
+ * 分页查询当前登录用户的所有订单
+ *
+ * @param pageNum pageNum
+ * @param pageSize pageSize
+ * @return ResponseResult
+ */
+@GetMapping("/list")
+public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+    return ResponseResult.okResult(orderService.userOrderList(pageNum, pageSize));
+}
+```
+
+③业务层
+
+前端需要分页展示，所以还得封装`Page<OrderGoodVo>`分页对象
+
+```java
+@Override
+public ResponseResult userOrderList(Integer pageNum, Integer pageSize) {
+
+    //取出登录用户的id
+    Integer userId = null;
+    try {
+        userId = SecurityUtils.getUserId();
+    } catch (Exception e) {
+        //未登录
+        throw new SystemException(NEED_LOGIN);
+    }
+    if (Objects.isNull(userId)) {
+        //没有携带token
+        throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+    }
+    LambdaQueryWrapper<Order> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Order::getUid, userId);
+    Page<Order> pageOrder = new Page<>(pageNum, pageSize);
+
+    Page<Order> page = page(pageOrder, queryWrapper);
+
+    List<Order> orderList = page.getRecords();
+    //TODO 将订单包含的商品order_item封装进order
+    List<OrderGoodVo> orderGoodVoList = new ArrayList<>();
+    orderList.forEach(o -> {
+        //订单od
+        Integer oid = o.getOid();
+        //根据订单id查询order_item集合
+        LambdaQueryWrapper<OrderItem> queryWrapper2 = new LambdaQueryWrapper<>();
+        queryWrapper2.eq(OrderItem::getOid, oid);
+        List<OrderItem> orderItemList = orderItemService.list(queryWrapper2);
+        OrderGoodVo orderGoodVo = BeanCopyUtils.copyBean(o, OrderGoodVo.class);
+        orderGoodVo.setOrderItemList(orderItemList);
+        orderGoodVoList.add(orderGoodVo);
+    });
+
+    Page<OrderGoodVo> orderGoodVoPage = new Page<>();
+    orderGoodVoPage.setCurrent(page.getCurrent());
+    orderGoodVoPage.setPages(page.getPages());
+    orderGoodVoPage.setSize(page.getSize());
+    orderGoodVoPage.setTotal(page.getTotal());
+    orderGoodVoPage.setRecords(orderGoodVoList);
+
+    return ResponseResult.okResult(orderGoodVoPage);
+}
+```
+
+## 6.2 查询订单商品详情
+
+![image-20221221190201548](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211902125.png)
+
+### 6.2.1 需求分析
+
+点击订单商品的查看详情按钮，跳转到订单详情页面，前端根据订单商品的gid查询并显示。
+
+### 6.2.2 后端实现
+
+①业务层
+
+在商品控制层编写
+
+```java
+ /**
+ * 根据gid查询商品
+ *
+ * @param gid
+ * @return
+ */
+@GetMapping("{gid}")
+public ResponseResult getGoods(@PathVariable Integer gid) {
+    LambdaQueryWrapper<Goods> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Goods::getGid, gid);
+    return ResponseResult.okResult(goodsService.getOne(queryWrapper));
+}
+```
+
+## 6.3 确认收货
+
+### 6.3.1 需求分析
+
+当订单处于已支付状态，订单每个商品均显示确认收货按钮，用户点击后先删除订单关联的此商品，若订单没有再关联的商品则把订单删除或者设置状态为已签收。
+
+### 6.3.2 后端实现
+
+①控制层
+
+```java
+ /**
+ * 订单中的商品已签收
+ *
+ * @param orderItem
+ * @return
+ */
+@PostMapping("/receive")
+public ResponseResult remove(@RequestBody OrderItem orderItem) {
+    return ResponseResult.okResult(orderItemService.delOrderItem(orderItem));
+}
+```
+
+②业务层
+
+```java
+@Override
+@Transactional
+public ResponseResult delOrderItem(OrderItem orderItem) {
+    log.info("订单商品==>{}",orderItem);
+    LambdaQueryWrapper<OrderItem> orderItemLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    orderItemLambdaQueryWrapper.eq(OrderItem::getGid, orderItem.getGid());
+    orderItemLambdaQueryWrapper.eq(OrderItem::getOid, orderItem.getOid());
+    orderItemLambdaQueryWrapper.eq(OrderItem::getCreatedUser, SecurityUtils.getUserId());
+    boolean remove = remove(orderItemLambdaQueryWrapper);
+    //删除了订单中的商品，判断订单是否还有商品，没有则删除
+    if (remove) {
+        LambdaQueryWrapper<OrderItem> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(OrderItem::getOid, orderItem.getOid());
+        wrapper.eq(OrderItem::getCreatedUser, SecurityUtils.getUserId());
+        List<OrderItem> orderList = list(wrapper);
+        //此订单已经没有商品
+        if (orderList.size() == 0) {
+            //删除订单
+            LambdaQueryWrapper<Order> orderLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            orderLambdaQueryWrapper.eq(Order::getOid, orderItem.getOid());
+            orderLambdaQueryWrapper.eq(Order::getUid, SecurityUtils.getUserId());
+            boolean remove2 = orderService.remove(orderLambdaQueryWrapper);
+        }
+    }
+    return ResponseResult.okResult();
+}
+```
+
+# 7. 购物车管理
+
+## 7.1 添加购物车
+
+### 7.1.1 需求分析
+
+![image-20221221192506717](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211925970.png)
+
+点击商品会跳转到商品详情页，当用户需要选择加入购物车时，同样可以选择加入购物车的数量。
+
+如果购物车已经有了该商品，则在此数据的基础之上进行更新操作。
+
+* 前端传入数据格式：`{gid: 100000391, num: 3}`
+* 请求接口：`post("/cart/add")`
+
+### 7.1.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 添加购物车
+ *
+ * @param cart
+ * @return
+ */
+@PostMapping("/add")
+public ResponseResult addCart(@RequestBody Cart cart) {
+    return ResponseResult.okResult(cartService.addCartByUid(cart));
+}
+```
+
+②业务层
+
+```java
+@Override
+public ResponseResult addCartByUid(Cart cart) {
+    //取出登录用户的id
+    Integer userId = SecurityUtils.getUserId();
+    cart.setUid(userId);
+    if(cart.getNum()==0||cart.getNum()==null){
+        cart.setNum(1);
+    }
+    //如果购物车有了此商品，就更新
+    LambdaQueryWrapper<Cart> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.eq(Cart::getUid, userId);
+    queryWrapper.eq(Cart::getGid, cart.getGid());
+    log.info("待加入购物车数据==>{}", cart);
+    saveOrUpdate(cart,queryWrapper);
+    return ResponseResult.okResult();
+}
+```
+
+## 7.2 查询购物车
+
+### 7.2.1 需求分析
+
+![image-20221221193212323](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211932773.png)
+
+跟据当前登录用户查询出其购物车数据即可。
+
+* 请求接口：`get("/cart/list")`，参数为用户`uid`
+
+### 7.2.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 用户购物车数据
+ *
+ * @param uid
+ * @return
+ */
+@RequestMapping("/list")
+public ResponseResult userCart(@RequestParam Integer uid) {
+    return ResponseResult.okResult(cartService.userCartGoodList(uid));
+}
+```
+
+②业务层
+
+```java
+@Override
+public List<CartGoodsVo> userCartGoodList(Integer uid) {
+    //先根据用户id查询购物车数据
+    LambdaQueryWrapper<Cart> cartLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    cartLambdaQueryWrapper.eq(Cart::getUid, uid);
+    cartLambdaQueryWrapper.orderByDesc(Cart::getCreatedTime);
+    List<Cart> cartList = list(cartLambdaQueryWrapper);
+    //封装VO
+    List<CartGoodsVo> cartGoodsVoList = new ArrayList<>();
+    cartList.forEach(c -> {
+        CartGoodsVo cartGoodsVo = BeanCopyUtils.copyBean(c, CartGoodsVo.class);
+        //商品id
+        Integer gid = c.getGid();
+        LambdaQueryWrapper<Goods> goodsLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        goodsLambdaQueryWrapper.eq(Goods::getGid, gid);
+        // TODO 待添加此商品是否被下架逻辑
+        Goods goods = goodsService.getOne(goodsLambdaQueryWrapper);
+        cartGoodsVo.setGoods(goods);
+        cartGoodsVoList.add(cartGoodsVo);
+    });
+    return cartGoodsVoList;
+}
+```
+
+## 7.3 删除购物车商品
+
+![gif_1ewf23fw](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211943373.gif)
+
+### 7.3.1 需求分析
+
+前端点击删除按钮，购物车数据就会删除。
+
+* 请求接口：`delete("/cart/")`，请求参数为购物车`cid`
+
+### 7.3.2 后端实现
+
+①控制层
+
+```java
+/**
+ * 根据购物车id删除购物车
+ *
+ * @param cid
+ * @return
+ */
+@DeleteMapping("/{cid}")
+public ResponseResult deleteCart(@PathVariable Integer cid) {
+    return ResponseResult.okResult(cartService.removeCartGoodByCid(cid));
+}
+```
+
+②业务层
+
+```java
+@Override
+public boolean removeCartGoodByCid(Integer cid) {
+    LambdaQueryWrapper<Cart> cartLambdaQueryWrapper = new LambdaQueryWrapper<>();
+    cartLambdaQueryWrapper.eq(Cart::getCid, cid);
+    boolean remove = remove(cartLambdaQueryWrapper);
+    return remove;
+}
+```
 
 
 
