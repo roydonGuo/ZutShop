@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 /**
- * (TOrder)表实体类
+ * (Order)表实体类
  *
  * @author makejava
  * @since 2022-12-15 20:04:11
@@ -36,6 +36,8 @@ public class Order {
     private Integer status;
     //商品总价
     private Integer price;
+    //支付宝流水号
+    private String alipayNo;
     //下单时间
     @TableField(fill = FieldFill.INSERT)
     private Date orderTime;
