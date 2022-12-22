@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static edu.zut.constants.SystemConstants.IS_DELETED;
+import static edu.zut.constants.SystemConstants.ROLE_ADMIN;
 
 @Slf4j
 @Service
@@ -47,6 +48,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("数据库登录用户：{}",user);
         //TODO 查询角色权限
         List<String> permissions = userMapper.selectRoleByUid(user.getUid());
+        if (!permissions.contains(ROLE_ADMIN)){
+            //非管理员
+            throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+        }
+
         log.info("当前登录用户：{}；拥有权限：{}",user.getUsername(),permissions);
 
         return new LoginUser(user,permissions);

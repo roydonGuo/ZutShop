@@ -4,6 +4,15 @@
 <mapper namespace="edu.zut.mapper.UserMapper">
 
 
+
+
+    <insert id="insertUser"  parameterType="edu.zut.domain.entity.User" useGeneratedKeys="true"
+            keyProperty="uid">
+        insert into t_user (username, password, avatar, phone, email)
+        values (#{username}, #{password}, #{avatar}, #{phone}, #{email});
+    </insert>
+
+
     <select id="selectRoleByUid" resultType="java.lang.String">
         select r.role
         from t_user_role ur

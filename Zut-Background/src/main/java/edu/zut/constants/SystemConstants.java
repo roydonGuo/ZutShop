@@ -14,4 +14,8 @@ public class SystemConstants {
     public static final Integer IS_DELETED = 1;
     public static final Integer IS_ALIVE = 0;
 
+    /**
+     * 系统管理员
+     */
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 }

@@ -1,6 +1,8 @@
 package edu.zut.controller;
 
+import edu.zut.domain.ResponseResult;
 import edu.zut.service.RoleService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,10 +16,20 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/role")
-public class RoleController{
+public class RoleController {
 
     @Resource
     private RoleService roleService;
+
+    /**
+     * 获取所有权限
+     *
+     * @return
+     */
+    @GetMapping
+    public ResponseResult findAll() {
+        return ResponseResult.okResult(roleService.list());
+    }
 
 }
 

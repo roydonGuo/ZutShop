@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace：命名空间，指向的就是对应接口的全限定名-->
-<mapper namespace="edu.zut.mapper.UserMapper">
+<mapper namespace="edu.zut.mapper.RoleMapper">
 
-
-
-
-    <insert id="insertUser"  parameterType="edu.zut.domain.entity.User" useGeneratedKeys="true"
-            keyProperty="uid">
-        insert into t_user (username, password, avatar, phone, email)
-        values (#{username}, #{password}, #{avatar}, #{phone}, #{email});
-    </insert>
-
-
-    <select id="selectRoleByUid" resultType="java.lang.String">
-        select r.role
+    <select id="getUserRoleList" resultType="edu.zut.domain.entity.Role">
+        select r.*
         from t_user_role ur
                  left join `t_user` u on ur.`uid` = u.`uid`
                  left join `t_role` r on ur.`rid` = r.`rid`

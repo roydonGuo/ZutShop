@@ -1,11 +1,16 @@
 package edu.zut.domain.entity;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 /**
  * (TRole)表实体类
  *
@@ -27,7 +32,14 @@ public class Role {
     //权限描述
     private String description;
     //权限
-    private String flag;
+    private String role;
+    private Integer status;
+    //创建时间
+    @TableField(fill = FieldFill.INSERT)
+    private Date createdTime;
+    //修改时间
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date modifiedTime;
 
 
 }

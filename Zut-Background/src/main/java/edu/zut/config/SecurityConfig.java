@@ -47,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //注销接口需要认证才能访问
                 .antMatchers("/user/logout").authenticated()
                 // 配置权限
-//                .antMatchers("/testCors").hasAuthority("system:dept:list")
+                .antMatchers("/user/*").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/role/*").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/goods/*").hasAuthority("ROLE_ADMIN")
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 

@@ -3,6 +3,8 @@ package edu.zut.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import edu.zut.domain.entity.Role;
 
+import java.util.List;
+
 
 /**
  * (Role)表数据库访问层
@@ -12,5 +14,6 @@ import edu.zut.domain.entity.Role;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<Role> getUserRoleList(Integer uid);
 }
 

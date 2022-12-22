@@ -12,6 +12,7 @@
         <module>Zut-Framework</module>
         <module>Zut-Shopping</module>
         <module>Zut-Payment</module>
+        <module>Zut-Background</module>
     </modules>
 
     <properties>

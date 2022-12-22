@@ -229,59 +229,38 @@
                   <ColumnInfoDTO>
                     <option name="comment" value="id" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="fid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="收藏人" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="uid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="商品id" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="gid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="createdUser" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="createdTime" />
                     <option name="type" value="java.util.Date" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="modifiedUser" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="modifiedTime" />
                     <option name="type" value="java.util.Date" />
                   </ColumnInfoDTO>
@@ -574,6 +553,58 @@
               <option name="saveModelName" value="Zut-Framework" />
               <option name="savePackageName" value="edu.zut" />
               <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_role">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="权限id" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="rid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="权限名" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="name" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="权限描述" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="description" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="权限" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="flag" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="TRole" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Background" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Background/src/main/java/edu/zut" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
