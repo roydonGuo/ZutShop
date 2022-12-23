@@ -1,7 +1,7 @@
 # ZutShop
 Junior practical training project
 
-> 本人大三做的实训项目，先后端分离。
+> 本人大三做的实训项目，前后端分离。
 > 前端使用Vue，前端项目地址：[https://github.com/roydonGuo/ZutShop-Vue](https://github.com/roydonGuo/ZutShop-Vue)
 
 
