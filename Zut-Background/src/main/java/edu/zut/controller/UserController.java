@@ -40,6 +40,7 @@ public class UserController {
     public ResponseResult findOne(@PathVariable Integer uid) {
         return ResponseResult.okResult(userService.getUserInfo(uid));
     }
+
     /**
      * 新增或者更新
      *
@@ -68,8 +69,7 @@ public class UserController {
                                    @RequestParam(defaultValue = "") String username,
                                    @RequestParam(defaultValue = "") String phone,
                                    @RequestParam(defaultValue = "") String email) {
-
-        return ResponseResult.okResult(userService.userRolePage(pageNum,pageSize,username,phone,email));
+        return ResponseResult.okResult(userService.userRolePage(pageNum, pageSize, username, phone, email));
     }
 
     /**
