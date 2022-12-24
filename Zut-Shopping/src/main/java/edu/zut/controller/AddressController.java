@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Author: roydon - 2022/12/14
+ * @author roydon
  **/
 @RestController
 @RequestMapping("/address")
@@ -22,9 +22,9 @@ public class AddressController {
     /**
      * 分页查询用户收货地址数据
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param pageNum 页号
+     * @param pageSize 大小
+     * @return Page<Address>
      */
     @GetMapping("/page")
     public ResponseResult selectAllAddress(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
@@ -35,8 +35,8 @@ public class AddressController {
     /**
      * 新增收货地址
      *
-     * @param address
-     * @return
+     * @param address 地址
+     * @return okResult
      */
     @PostMapping("/add")
     public ResponseResult addAddress(@RequestBody Address address) {
@@ -46,8 +46,8 @@ public class AddressController {
     /**
      * 删除地址数据
      *
-     * @param aid
-     * @return
+     * @param aid 地址aid
+     * @return okResult
      */
     @DeleteMapping("/{aid}")
     public ResponseResult delete(@PathVariable Integer aid) {
@@ -59,8 +59,8 @@ public class AddressController {
     /**
      * 批量删除收货地址
      *
-     * @param aids
-     * @return
+     * @param aids [1，2，3，...]
+     * @return okResult
      */
     @DeleteMapping("/del/batch")
     public ResponseResult deleteBatch(@RequestBody List<Integer> aids) {
@@ -71,8 +71,8 @@ public class AddressController {
     /**
      * 更新地址
      *
-     * @param address
-     * @return
+     * @param address address
+     * @return okResult
      */
     @PostMapping("/update")
     public ResponseResult update(@RequestBody Address address) {
@@ -82,8 +82,8 @@ public class AddressController {
     /**
      * 设为默认
      *
-     * @param address
-     * @return
+     * @param address address
+     * @return okResult
      */
     @PostMapping("/setDefault")
     public ResponseResult setDefault(@RequestBody Address address) {
@@ -93,7 +93,7 @@ public class AddressController {
     /**
      * 非分页查询用户地址
      *
-     * @return
+     * @return List<Address>
      */
     @GetMapping("/list")
     public ResponseResult getList() {

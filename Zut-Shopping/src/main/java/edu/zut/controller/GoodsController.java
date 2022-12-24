@@ -24,9 +24,9 @@ public class GoodsController {
     /**
      * 分页查询所有商品【暂行方案】
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param pageNum 页号
+     * @param pageSize 大小
+     * @return Page<Goods>
      */
     @GetMapping("/list")
     public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
@@ -37,7 +37,7 @@ public class GoodsController {
      * 根据商品名模糊搜索,并分页
      *
      * @param title 商品名
-     * @return ResponseResult
+     * @return Page<Goods>
      */
     @GetMapping("/search")
     public ResponseResult searchGood(@RequestParam Integer pageNum,
@@ -50,9 +50,9 @@ public class GoodsController {
     /**
      * 今日热销
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param pageNum 页号
+     * @param pageSize 大小
+     * @return Page<Goods>
      */
     @GetMapping("/today")
     public ResponseResult todayGood(@RequestParam Integer pageNum,
@@ -64,8 +64,8 @@ public class GoodsController {
     /**
      * 根据gid查询商品
      *
-     * @param gid
-     * @return
+     * @param gid 商品gid
+     * @return Goods
      */
     @GetMapping("{gid}")
     public ResponseResult getGoods(@PathVariable Integer gid) {

@@ -24,7 +24,6 @@ import java.util.Objects;
 
 import static edu.zut.constants.RedisConstants.LOGIN_USER_KEY;
 
-
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 

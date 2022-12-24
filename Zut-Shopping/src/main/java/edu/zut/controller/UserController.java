@@ -25,8 +25,8 @@ public class UserController {
     /**
      * 用户注册
      *
-     * @param userDto
-     * @return
+     * @param userDto userDto
+     * @return okResult
      */
     @PostMapping("/register")
     public ResponseResult register(@RequestBody UserDto userDto) {
@@ -36,8 +36,8 @@ public class UserController {
     /**
      * 根据uid查询用户信息
      *
-     * @param uid
-     * @return
+     * @param uid 用户uid
+     * @return User
      */
     @GetMapping("/{uid}")
     public ResponseResult findOne(@PathVariable Integer uid) {
@@ -47,8 +47,8 @@ public class UserController {
     /**
      * 修改密码
      *
-     * @param userDto
-     * @return
+     * @param userDto userDto
+     * @return boolean
      */
     @PostMapping("/password")
     public ResponseResult update(@RequestBody UserDto userDto) {
@@ -58,8 +58,8 @@ public class UserController {
     /**
      * 更新用户信息
      *
-     * @param user
-     * @return
+     * @param user user
+     * @return okResult
      */
     @PostMapping("/update")
     public ResponseResult updateUser(@RequestBody User user) {

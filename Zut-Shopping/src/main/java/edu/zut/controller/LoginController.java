@@ -21,19 +21,30 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    /**
+     * 用户登录
+     *
+     * @param user user
+     * @return userLoginVo
+     */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
-    public ResponseResult login(@RequestBody User user){
-        if(!StringUtils.hasText(user.getUsername())){
+    public ResponseResult login(@RequestBody User user) {
+        if (!StringUtils.hasText(user.getUsername())) {
             //提示 必须要传用户名
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
         return loginService.login(user);
     }
 
+    /**
+     * 退出登录
+     *
+     * @return ResponseResult
+     */
     @RequestMapping("/logout")
     @ApiOperation(value = "退出登录")
-    public ResponseResult logout(){
+    public ResponseResult logout() {
         return loginService.logout();
     }
 

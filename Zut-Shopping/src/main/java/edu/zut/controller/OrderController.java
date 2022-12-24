@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 /**
  * (Order)表控制层
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-15 20:04:09
  */
 @RestController
@@ -26,7 +26,7 @@ public class OrderController {
      *
      * @param pageNum pageNum
      * @param pageSize pageSize
-     * @return ResponseResult
+     * @return Page<OrderGoodVo>
      */
     @GetMapping("/list")
     public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
@@ -36,7 +36,7 @@ public class OrderController {
     /**
      * 根据订单id获取订单
      *
-     * @param oid oid
+     * @param oid 订单oid
      * @return Order
      */
     @GetMapping("/{oid}")
@@ -48,8 +48,8 @@ public class OrderController {
     /**
      * 用户在购物车选择商品数据，生成订单
      *
-     * @param orderAddressGoodsDto
-     * @return ResponseResult
+     * @param orderAddressGoodsDto OrderDto
+     * @return Order
      */
     @PostMapping("/create")
     public ResponseResult createOrder(@RequestBody OrderDto orderAddressGoodsDto) {

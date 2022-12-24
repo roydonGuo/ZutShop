@@ -23,8 +23,8 @@ public class FavoritesController {
     /**
      * 添加商品收藏
      *
-     * @param gid
-     * @return
+     * @param gid 商品gid
+     * @return boolean
      */
     @PostMapping("/add")
     public ResponseResult add(@RequestBody Integer gid) {
@@ -34,9 +34,9 @@ public class FavoritesController {
     /**
      * 收藏商品列表
      *
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param pageNum 页号
+     * @param pageSize 大小
+     * @return Page<Goods>
      */
     @GetMapping("/list")
     public ResponseResult selectAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {

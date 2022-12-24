@@ -20,9 +20,14 @@ public class FileController {
     @Resource
     private FileService fileService;
 
+    /**
+     * 文件上传
+     *
+     * @param file 文件
+     * @return url
+     */
     @PostMapping("/upload")
     public ResponseResult uploadFile(@RequestParam MultipartFile file) {
-        //头像上传
         return ResponseResult.okResult(fileService.uploadImg(file));
     }
 

@@ -26,8 +26,8 @@ public class OrderItemController {
     /**
      * 订单中的商品已签收
      *
-     * @param orderItem
-     * @return
+     * @param orderItem orderItem
+     * @return okResult
      */
     @PostMapping("/receive")
     public ResponseResult remove(@RequestBody OrderItem orderItem) {
