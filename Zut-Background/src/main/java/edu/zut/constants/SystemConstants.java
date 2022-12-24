@@ -18,4 +18,9 @@ public class SystemConstants {
      * 系统管理员
      */
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    /**
+     * 权限id
+     */
+    public static final Integer ROLE_ADMIN_ID = 1;
+    public static final Integer ROLE_USER_ID = 2;
 }
