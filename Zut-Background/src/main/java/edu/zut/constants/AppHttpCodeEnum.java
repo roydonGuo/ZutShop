@@ -1,9 +1,8 @@
 package edu.zut.constants;
 
 public enum AppHttpCodeEnum {
-    // 成功
+
     SUCCESS(200, "操作成功"),
-    // 登录
     NEED_LOGIN(401, "需要登录后操作"),
     NO_OPERATOR_AUTH(403, "无权限操作"),
     USER_IS_DELETED(404, "用户已被删除"),

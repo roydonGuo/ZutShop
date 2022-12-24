@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
- * (TUserRole)表实体类
+ * (UserRole)表实体类
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-23 21:41:39
  */
 @SuppressWarnings("serial")
