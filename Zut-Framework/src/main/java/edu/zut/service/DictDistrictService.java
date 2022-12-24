@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * (DictDistrict)表服务接口
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-15 12:14:03
  */
 public interface DictDistrictService extends IService<DictDistrict> {

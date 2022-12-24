@@ -6,7 +6,6 @@ public class SystemConstants {
      * 正常状态
      */
     public static final String NORMAL = "0";
-    public static final String ADMAIN = "1";
 
     /**
      * 用户是否为删除状态

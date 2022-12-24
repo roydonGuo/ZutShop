@@ -4,6 +4,8 @@ package edu.zut.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import edu.zut.domain.ResponseResult;
 import edu.zut.domain.entity.User;
+import edu.zut.domain.entity.UserRole;
+import edu.zut.service.UserRoleService;
 import edu.zut.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +85,9 @@ public class UserController {
         return ResponseResult.okResult(userService.setDeletedByUid(uid));
     }
 
+    @Resource
+    private UserRoleService userRoleService;
+
     /**
      * 根据用户id删除
      *
@@ -91,6 +96,10 @@ public class UserController {
      */
     @DeleteMapping("/del/{uid}")
     public ResponseResult deleteUser(@PathVariable Integer uid) {
+        //删除用户权限
+        LambdaQueryWrapper<UserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserRole::getUid, uid);
+        userRoleService.remove(queryWrapper);
         return ResponseResult.okResult(userService.removeById(uid));
     }
 

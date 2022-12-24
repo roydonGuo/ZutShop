@@ -9,5 +9,6 @@
                  left join `t_user` u on ur.`uid` = u.`uid`
                  left join `t_role` r on ur.`rid` = r.`rid`
         where ur.uid = #{uid}
+        order by ur.rid ASC
     </select>
 </mapper>

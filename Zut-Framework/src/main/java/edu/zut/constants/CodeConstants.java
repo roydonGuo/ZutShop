@@ -5,7 +5,7 @@ package edu.zut.constants;
  * Author: yi cheng
  * Date: 2022/9/28
  * Time: 18:51
- * 同样可以使用 HttpStatus 枚举类
+ * http响应状态码，同样可以使用 HttpStatus 枚举类
  **/
 public class CodeConstants {
 

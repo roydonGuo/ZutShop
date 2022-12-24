@@ -8,10 +8,12 @@ import edu.zut.domain.ResponseResult;
 import edu.zut.domain.dto.UserDto;
 import edu.zut.domain.entity.LoginUser;
 import edu.zut.domain.entity.User;
+import edu.zut.domain.entity.UserRole;
 import edu.zut.domain.vo.UserInfoVo;
 import edu.zut.enums.AppHttpCodeEnum;
 import edu.zut.exception.SystemException;
 import edu.zut.mapper.UserMapper;
+import edu.zut.service.UserRoleService;
 import edu.zut.service.UserService;
 import edu.zut.utils.BeanCopyUtils;
 import edu.zut.utils.RedisCache;
@@ -30,7 +32,7 @@ import static edu.zut.enums.AppHttpCodeEnum.NEED_LOGIN;
 /**
  * (User)表服务实现类
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-12 10:08:33
  */
 @Slf4j
@@ -44,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public ResponseResult getUserInfo(Integer uid) {
         //根据用户id查询用户信息
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ObjectUtils.isNotEmpty(uid),User::getUid,uid);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(uid), User::getUid, uid);
         User user = getOne(queryWrapper);
         //封装成UserInfoVo
         UserInfoVo vo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
@@ -54,13 +56,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public ResponseResult updateUserInfo(User user) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getUid,user.getUid());
+        queryWrapper.eq(User::getUid, user.getUid());
         redisCache.setCacheObject(LOGIN_USER_KEY + user.getUid(), new LoginUser(user));
-        return ResponseResult.okResult(update(user,queryWrapper));
+        return ResponseResult.okResult(update(user, queryWrapper));
     }
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private UserRoleService userRoleService;
 
     @Override
     public ResponseResult register(UserDto userDto) {
@@ -78,7 +86,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //密码加密
         String encodePassword = passwordEncoder.encode(userDto.getPassword());
         userDto.setPassword(encodePassword);
-        save(BeanCopyUtils.copyBean(userDto,User.class));
+        User user = BeanCopyUtils.copyBean(userDto, User.class);
+        userMapper.insert(user);
+        //TODO 添加普通用户权限
+        Integer insertUserUid = user.getUid();
+        userRoleService.save(new UserRole(null, insertUserUid, 2));
         return ResponseResult.okResult();
     }
 
@@ -95,14 +107,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_NULL);
         }
         //取出登录用户的id
-        Integer userId =null;
+        Integer userId = null;
         try {
             userId = SecurityUtils.getUserId();
-        }catch (Exception e) {
+        } catch (Exception e) {
             //未登录
             throw new SystemException(NEED_LOGIN);
         }
-        if(Objects.isNull(userId)){
+        if (Objects.isNull(userId)) {
             //没有携带token
             throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
         }
@@ -111,7 +123,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq(User::getUid, userId);
         User one = getOne(queryWrapper);
         //判断输入密码是否与数据库相同
-        boolean matches = passwordEncoder.matches(userDto.getPassword(),one.getPassword());
+        boolean matches = passwordEncoder.matches(userDto.getPassword(), one.getPassword());
         if (!matches) {
             //不存在用户
             throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_MATCH);
@@ -126,9 +138,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String encodePassword = passwordEncoder.encode(userDto.getNewPassword());
         User user = loginUser.getUser();
         user.setPassword(encodePassword);
-        log.info("修改后的用户：{}",user);
-        redisCache.setCacheObject(LOGIN_USER_KEY + userId,new LoginUser(user) );
-        return ResponseResult.okResult(update(user,queryWrapper));
+        log.info("修改后的用户：{}", user);
+        redisCache.setCacheObject(LOGIN_USER_KEY + userId, new LoginUser(user));
+        return ResponseResult.okResult(update(user, queryWrapper));
     }
 }
 

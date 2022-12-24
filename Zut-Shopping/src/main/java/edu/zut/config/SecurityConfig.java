@@ -16,21 +16,39 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.annotation.Resource;
 
+/**
+ * Security配置
+ */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * BCryptPasswordEncoder加密
+     * @return BCryptPasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * token拦截器
+     */
     @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
+    /**
+     * 自定义失败处理
+     * 认证过程中出现异常
+     */
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
 
+    /**
+     * 自定义失败处理
+     * 授权过程中出现异常
+     */
     @Resource
     private AccessDeniedHandler accessDeniedHandler;
 

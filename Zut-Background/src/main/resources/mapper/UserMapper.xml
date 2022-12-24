@@ -4,8 +4,6 @@
 <mapper namespace="edu.zut.mapper.UserMapper">
 
 
-
-
     <insert id="insertUser"  parameterType="edu.zut.domain.entity.User" useGeneratedKeys="true"
             keyProperty="uid">
         insert into t_user (username, password, avatar, phone, email)

@@ -22,9 +22,9 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         accessDeniedException.printStackTrace();
+        // 返回403无权限操作
         ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NO_OPERATOR_AUTH);
         String json = JSON.toJSONString(result);
         WebUtils.renderString(response,json);
-
     }
 }

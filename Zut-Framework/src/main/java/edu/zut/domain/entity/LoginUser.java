@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * SpringSecurity权限认证LoginUser封装
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

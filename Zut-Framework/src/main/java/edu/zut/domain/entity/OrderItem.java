@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 /**
- * (TOrderItem)表实体类
+ * (OrderItem)表实体类
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-15 22:21:47
  */
 @SuppressWarnings("serial")

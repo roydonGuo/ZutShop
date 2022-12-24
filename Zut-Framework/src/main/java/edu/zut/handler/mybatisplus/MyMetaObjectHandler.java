@@ -7,16 +7,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * 公共字段操作
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
+        // 取出登录用户uid
         Integer userId = null;
         try {
             userId = SecurityUtils.getUserId();
         } catch (Exception e) {
             e.printStackTrace();
-            userId = -1;//表示是自己创建
+            // 表示是自己创建
+            userId = -1;
         }
         this.setFieldValByName("orderTime", new Date(), metaObject);
         this.setFieldValByName("createdTime", new Date(), metaObject);

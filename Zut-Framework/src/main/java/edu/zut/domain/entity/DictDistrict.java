@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
- * (TDictDistrict)表实体类
+ * (DictDistrict)表实体类
  *
- * @author makejava
+ * @author roydon
  * @since 2022-12-15 12:14:02
  */
 @SuppressWarnings("serial")

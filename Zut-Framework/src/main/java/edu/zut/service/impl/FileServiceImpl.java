@@ -19,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
+/**
+ * 七牛云对象存储服务
+ */
 @Data
 @Slf4j
 @Service
@@ -33,9 +36,9 @@ public class FileServiceImpl implements FileService {
 //        if(!originalFilename.endsWith(".png")){
 //            throw new SystemException(AppHttpCodeEnum.FILE_TYPE_ERROR);
 //        }
-
         //上传文件到OSS
         assert originalFilename != null;
+        //以日期构造路径，uuid作为文件名
         String filePath = PathUtils.generateFilePath(originalFilename);
         String url = uploadOss(file, filePath);
 
@@ -53,6 +56,15 @@ public class FileServiceImpl implements FileService {
     @Value("${oss.bucket}")
     private String bucket;
 
+    @Value("${oss.bucketUrl}")
+    private String bucketUrl;
+
+    /**
+     * 七牛云提供上传api
+     * @param imgFile 文件
+     * @param filePath 路径
+     * @return url
+     */
     private String uploadOss(MultipartFile imgFile, String filePath) {
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.autoRegion());
@@ -70,7 +82,7 @@ public class FileServiceImpl implements FileService {
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
                 System.out.println(putRet.key);
                 System.out.println(putRet.hash);
-                return "http://rmvo1wrxo.hd-bkt.clouddn.com/" + key;
+                return bucketUrl + key;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());

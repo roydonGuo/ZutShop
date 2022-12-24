@@ -1,8 +1,10 @@
 package edu.zut.exception;
 
-
 import edu.zut.enums.AppHttpCodeEnum;
 
+/**
+ * 抛出异常
+ */
 public class SystemException extends RuntimeException {
 
     private int code;

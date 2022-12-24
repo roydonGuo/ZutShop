@@ -63,7 +63,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             queryWrapper.orderByDesc(Goods::getCreatedTime);
             Page<Goods> goodsPage = page(new Page<>(pageNum, pageSize), queryWrapper);
             //TODO 存入redis
-            redisCache.setCacheObject(TODAY_GOODS_KEY + pageNum, goodsPage, TODAY_GOODS_TTL, TimeUnit.MINUTES);
+            redisCache.setCacheObject(TODAY_GOODS_KEY + pageNum, goodsPage, TODAY_GOODS_TTL, TimeUnit.SECONDS);
             return goodsPage;
         } else {
             return todayGoodsList;

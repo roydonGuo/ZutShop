@@ -6,13 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.zut.domain.entity.Role;
 import edu.zut.domain.entity.User;
+import edu.zut.domain.entity.UserRole;
 import edu.zut.domain.vo.UserInfoVo;
 import edu.zut.domain.vo.UserRoleVo;
 import edu.zut.mapper.RoleMapper;
 import edu.zut.mapper.UserMapper;
+import edu.zut.service.UserRoleService;
 import edu.zut.service.UserService;
 import edu.zut.utils.BeanCopyUtils;
 import edu.zut.utils.RedisCache;
+import edu.zut.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,6 +69,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Resource
     private RoleMapper roleMapper;
 
+    @Resource
+    private UserRoleService userRoleService;
+
     @Override
     public Page<UserRoleVo> userRolePage(Integer pageNum, Integer pageSize, String username, String phone, String email) {
 
@@ -73,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.like(Strings.isNotEmpty(username), User::getUsername, username);
         queryWrapper.like(Strings.isNotEmpty(phone), User::getUsername, phone);
         queryWrapper.like(Strings.isNotEmpty(email), User::getUsername, email);
+        queryWrapper.ne(User::getUid, SecurityUtils.getUserId());
         Page<User> userPage = page(new Page<>(pageNum, pageSize), queryWrapper);
 
         List<User> userList = userPage.getRecords();
@@ -114,6 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Integer uid = user.getUid();
         log.info("新增加的用户==>{}",uid);
         //增加普通权限
+        userRoleService.save(new UserRole(null,uid,2));
 //        userMapper.insertUserRole(uid,2);
 
         return true;

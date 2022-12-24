@@ -565,36 +565,24 @@
                   <ColumnInfoDTO>
                     <option name="comment" value="权限id" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="rid" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="权限名" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="name" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="权限描述" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="description" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="权限" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
                     <option name="name" value="flag" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
@@ -699,6 +687,40 @@
               <option name="saveModelName" value="Zut-Framework" />
               <option name="savePackageName" value="edu.zut" />
               <option name="savePath" value="./Zut-Framework/src/main/java/edu/zut" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="zut-shop.t_user_role">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户id" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="uid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户具有的权限id" />
+                    <option name="custom" value="false" />
+                    <option name="ext">
+                      <map />
+                    </option>
+                    <option name="name" value="rid" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="TUserRole" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="Zut-Background" />
+              <option name="savePackageName" value="edu.zut" />
+              <option name="savePath" value="./Zut-Background/src/main/java/edu/zut" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>

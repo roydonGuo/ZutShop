@@ -42,7 +42,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Override
     public ResponseResult userOrderList(Integer pageNum, Integer pageSize) {
-
         //取出登录用户的id
         Integer userId = null;
         try {

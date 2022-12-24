@@ -50,6 +50,7 @@ public class LoginServiceImpl implements LoginService {
         if (StringUtils.isEmpty(user.getUsername())) {
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
+        // 用户验证
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -68,6 +69,7 @@ public class LoginServiceImpl implements LoginService {
         // 存入redis
         redisCache.setCacheObject(LOGIN_USER_KEY + userId, loginUser);
 
+        //返回结果封装
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         UserLoginVo userLoginVo = new UserLoginVo(jwt, userInfoVo);
 

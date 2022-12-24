@@ -28,3 +28,4 @@ oss: #七牛云对象存储
   accessKey: 5QiJWZTAE8CCDpjiJyy8RlxZWtPzUP0CEWX-_O3i
   secretKey: S6tbwe-RyZ1R3KN3APYpVYtC5gcnpnCUFTkFWx51
   bucket: zut-shop-avatar
+  bucketUrl: http://rmvo1wrxo.hd-bkt.clouddn.com/
