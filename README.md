@@ -1,17 +1,23 @@
 # ZutShop
+
 Junior practical training project
 
-> 本人大三做的实训项目，前后端分离。
+> 本人大三做的实训项目，前后端分离，包含后台管理。
+>
+> 后端地址：[https://github.com/roydonGuo/ZutShop](https://github.com/roydonGuo/ZutShop)
+>
 > 前端使用Vue，前端项目地址：[https://github.com/roydonGuo/ZutShop-Vue](https://github.com/roydonGuo/ZutShop-Vue)
 
 
 ---
 
+![zhiziLogo](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251930999.png)
+
 # 0. 项目介绍
 
-项目名称：学子商城。类似于购物车系统、订单系统。前后端分离。
+项目名称：智子商城。类似于购物车系统、订单系统。前后端分离。
 
-![image-20221220212423993](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211726177.png)
+![image-20221225195256378](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251952985.png)
 
 分析项目：
 
@@ -45,7 +51,7 @@ Junior practical training project
 
 针对本项目，数据库设计如下：
 
-![image-20221213094711373](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211732078.png)
+![image-20221222214609270](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212222146413.png)
 
 sql文件在项目resources中。
 
@@ -943,7 +949,7 @@ public class SwaggerConfig {
         Contact contact = new Contact("roydon", "https://www.roydon.top", "3133010060@qq.com");
         return new ApiInfoBuilder()
                 .title("zut-shop")
-                .description("学子商城")
+                .description("智子商城")
                 .contact(contact)   // 联系方式
                 .version("1.0.0")  // 版本
                 .build();
@@ -1029,6 +1035,8 @@ boolean matches = passwordEncoder.matches("123456",user.getPassword()); //true
 
 ### 3.1.1登录
 
+![image-20221225195346780](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251953767.png)
+
 controller
 
 ```java
@@ -1052,7 +1060,7 @@ public class LoginController {
 }
 ```
 
-。LoginService
+LoginService
 
 ```java
 public interface LoginService {
@@ -1383,6 +1391,10 @@ redis也成功存入数据
 
 ### 3.1.2 登出
 
+即用户登陆后选择退出登录。鼠标移动到头像弹出。
+
+![image-20221225195412568](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251954606.png)
+
 controller接口
 
 ```java
@@ -1417,7 +1429,7 @@ public ResponseResult logout() {
 
 前端页面：
 
-![image-20221220212533109](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736151.png)
+![image-20221225195518826](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251955906.png)
 
 ### 3.2.1 需求分析
 
@@ -1541,7 +1553,7 @@ public class BeanCopyUtils {
 
 前端页面：
 
-![image-20221220212607942](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211736149.png)
+![image-20221225195703165](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251957548.png)
 
 ### 3.3.1 需求分析
 
@@ -1658,7 +1670,7 @@ public ResponseResult updatePwd(UserDto userDto) {
 
 ### 3.4.1 需求分析
 
-![image-20221221175300012](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211803135.png)
+![image-20221225195817867](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251958240.png)
 
 提供一个表单，即是展示用户信息的页面，也可直接进行修改，以及头像的上传。
 
@@ -1840,7 +1852,7 @@ public class FileServiceImpl implements FileService {
 
 ### 4.1.1 需求分析
 
-![image-20221221183956994](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211839274.png)
+![image-20221225195948753](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212251959652.png)
 
 * 前端传入：`Address`实体
 
@@ -1931,7 +1943,7 @@ public ResponseResult userAddressList(Integer pageNum, Integer pageSize) {
 
 ### 4.3.1 需求分析
 
-![image-20221221184024156](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211840477.png)
+![image-20221225200029514](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252000973.png)
 
 * 前端传入`Address`实体
 * 请求地址：`post("/address/update")`
@@ -2059,13 +2071,11 @@ public ResponseResult setDefaultAddress(Address address) {
 
 # 5. 首页完善
 
-![image-20221221184202762](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211842126.png)
-
-
-
 ## 5.1 添加今日热销栏
 
 ### 5.1.1 需求分析
+
+![image-20221225200120607](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252001034.png)
 
 * 前端负责渲染，后端只需根据商品表的修改时间字段进行查找，并制定查找条数。
 
@@ -2113,7 +2123,7 @@ public Page<Goods> todayGoodList(Integer pageNum, Integer pageSize) {
 
 ### 5.2.1 需求分析
 
-![image-20221221184759925](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211848413.png)
+![image-20221225200142140](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252001722.png)
 
 分页查询出商品及和，前端负责渲染
 
@@ -2152,7 +2162,9 @@ public ResponseResult goodList(Integer pageNum, Integer pageSize) {
 
 ### 5.3.1 需求分析
 
-前端在输入框输入商品名称，后端根据输入名称进行模糊查询并返回商品集合。
+![image-20221225200217850](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252002286.png)
+
+前端在输入框输入商品名称，后端根据输入名称进行模糊查询并返回商品集合。例如上图输入“华硕”搜索结果。
 
 ### 5.3.2 后端实现
 
@@ -2190,6 +2202,8 @@ public Page<Goods> searchGoodListByTitle(Integer pageNum, Integer pageSize, Stri
 ## 5.4 商品收藏
 
 ### 5.4.1 需求分析
+
+![image-20221225200310363](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252003694.png)
 
 点击商品页加入收藏按钮添加到我的收藏中。
 
@@ -2229,11 +2243,11 @@ public boolean addFavorites(Integer gid) {
 
 # 6. 订单管理
 
-![image-20221221185417592](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211854782.png)
-
 ## 6.1 查询订单列表
 
 ### 6.1.1 需求分析
+
+![image-20221225200336242](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252003609.png)
 
 查询出用户的所有订单，并根据订单的oid关联查询订单包含的商品集合。
 
@@ -2333,9 +2347,9 @@ public ResponseResult userOrderList(Integer pageNum, Integer pageSize) {
 
 ## 6.2 查询订单商品详情
 
-![image-20221221190201548](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211902125.png)
-
 ### 6.2.1 需求分析
+
+![image-20221225200419387](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252004763.png)
 
 点击订单商品的查看详情按钮，跳转到订单详情页面，前端根据订单商品的gid查询并显示。
 
@@ -2420,7 +2434,7 @@ public ResponseResult delOrderItem(OrderItem orderItem) {
 
 ### 7.1.1 需求分析
 
-![image-20221221192506717](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211925970.png)
+![image-20221225200644888](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252006374.png)
 
 点击商品会跳转到商品详情页，当用户需要选择加入购物车时，同样可以选择加入购物车的数量。
 
@@ -2471,7 +2485,7 @@ public ResponseResult addCartByUid(Cart cart) {
 
 ### 7.2.1 需求分析
 
-![image-20221221193212323](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211932773.png)
+![image-20221225200719190](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252007541.png)
 
 跟据当前登录用户查询出其购物车数据即可。
 
@@ -2523,9 +2537,9 @@ public List<CartGoodsVo> userCartGoodList(Integer uid) {
 
 ## 7.3 删除购物车商品
 
-![gif_1ewf23fw](https://raw.githubusercontent.com/roydonGuo/Typora-Pic/main/md-pic202212211943373.gif)
-
 ### 7.3.1 需求分析
+
+![gif-110](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252009639.gif)
 
 前端点击删除按钮，购物车数据就会删除。
 
@@ -2562,5 +2576,707 @@ public boolean removeCartGoodByCid(Integer cid) {
 
 
 
+# 8. 整合支付宝支付(沙箱)
 
+只是使用支付宝支付api进行交易模拟，需前往支付宝开发平台进行沙箱应用创建。
+
+支付宝开发平台地址地址==>[https://open.alipay.com/develop/sandbox/app](https://open.alipay.com/develop/sandbox/app)
+
+使用到的依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+<!--lombok-->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
+<!--mysql数据库驱动-->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency>
+<!--alipay-->
+<dependency>
+    <groupId>com.alipay.sdk</groupId>
+    <artifactId>alipay-easysdk</artifactId>
+    <version>2.2.0</version>
+</dependency>
+<!--mybatisPlus依赖-->
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>
+    <version>3.5.2</version>
+</dependency>
+<dependency>
+    <groupId>cn.hutool</groupId>
+    <artifactId>hutool-all</artifactId>
+    <version>5.8.10</version>
+</dependency>
+```
+
+需要的实体：`Alipay`
+
+```java
+@Data
+public class AliPay {
+    //订单号
+    private String traceNo;
+    //金额
+    private String totalAmount;
+    private String subject;
+//    private String alipayTraceNo;
+}
+```
+
+配置文件yml配置：
+
+```yml
+alipay:
+  appId: 202100*******
+  appPrivateKey: **************
+  alipayPublicKey: *********
+  notifyUrl: 
+```
+
+查看沙箱应用id、公钥和私钥补全配置。
+
+alipay配置类用来加载配置信息：
+
+```java
+@Data
+@Slf4j
+@Component
+@ConfigurationProperties(prefix = "alipay")
+public class AliPayConfig {
+
+    private static final String GATEWAY_URL ="https://openapi.alipaydev.com/gateway.do";
+    private static final String FORMAT ="JSON";
+    private static final String CHARSET ="utf-8";
+    private static final String SIGN_TYPE ="RSA2";
+
+    private String appId;
+    private String appPrivateKey;
+    private String alipayPublicKey;
+    private String notifyUrl;
+
+    @PostConstruct
+    public void init() {
+        // 设置参数（全局只需设置一次）
+        Config config = new Config();
+        config.protocol = "https";
+        config.gatewayHost = "openapi.alipaydev.com";
+        config.signType = SIGN_TYPE;
+        config.appId = this.appId;
+        config.merchantPrivateKey = this.appPrivateKey;
+        config.alipayPublicKey = this.alipayPublicKey;
+        config.notifyUrl = this.notifyUrl;
+        Factory.setOptions(config);
+        System.out.println(JSONUtil.toJsonStr(config));
+        log.info("=======支付宝SDK初始化成功=======");
+    }
+}
+```
+
+控制层写一个发起支付接口：
+
+```java
+/**
+ * http://localhost:7778/alipay/pay?subject=15689585674&traceNo=1024253&totalAmount=3333
+ *
+ * @param aliPay
+ * @return
+ */
+@GetMapping("/pay")
+public String pay(AliPay aliPay) {
+    AlipayTradePagePayResponse response;
+    try {
+        //  发起API调用（以创建当面付收款二维码为例）
+        response = Factory.Payment.Page()
+                .pay(URLEncoder.encode(aliPay.getSubject(), "UTF-8"), aliPay.getTraceNo(), aliPay.getTotalAmount(), "");
+    } catch (Exception e) {
+        System.err.println("调用遭遇异常，原因：" + e.getMessage());
+        throw new RuntimeException(e.getMessage(), e);
+    }
+    return response.getBody();
+}
+```
+
+打开谷歌浏览器无痕窗口访问写好的支付地址自动跳转到支付页面：
+
+![image-20221222202104500](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212222021178.png)
+
+此时就可以模拟支付款了，账号密码在支付宝开发平台皆可查到。
+
+那支付成功后，就必然有一个回调，但支付宝平台是公网，我们本地项目它回调不过来，所以暂且需要把本地端口暴露到公网，使用内网穿透工具==>[https://natapp.cn/](https://natapp.cn/)
+
+注册登录可申请免费内网穿透，指定端口号后拿到官网给的密钥，下载内网穿透工具配置好密钥即可把端口暴露到公网上。这个公网就是填写配置类yml中notifyUrl的选项。
+
+支付宝回调接口：
+
+```java
+@Resource
+private OrderMapper orderMapper;
+
+@PostMapping("/notify")  // 必须是POST接口
+public String payNotify(HttpServletRequest request) throws Exception {
+    if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
+        System.out.println("=========支付宝异步回调========");
+
+        Map<String, String> params = new HashMap<>();
+        Map<String, String[]> requestParams = request.getParameterMap();
+        for (String name : requestParams.keySet()) {
+            params.put(name, request.getParameter(name));
+        }
+
+        String tradeNo = params.get("out_trade_no");
+        String payTime = params.get("gmt_payment");
+        String alipayTradeNo = params.get("trade_no");
+        // 支付宝验签
+        if (Factory.Payment.Common().verifyNotify(params)) {
+            // 验签通过
+            System.out.println("交易名称: " + params.get("subject"));
+            System.out.println("交易状态: " + params.get("trade_status"));
+            System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
+            System.out.println("商户订单号: " + params.get("out_trade_no"));
+            System.out.println("交易金额: " + params.get("total_amount"));
+            System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
+            System.out.println("买家付款时间: " + params.get("gmt_payment"));
+            System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
+
+            // 更新订单未已支付[ORDER_PAID]
+            orderMapper.updateState(Integer.valueOf(tradeNo), 1, payTime, alipayTradeNo);
+        }
+    }
+    return "success";
+}
+```
+
+支付成功后支付宝会调用本地此接口，这此接口支付宝会传进来很多参数，包含订单详情，支付宝流水号，支付款时间等等。
+
+在此接口调用本地方法把订单状态改为已支付，即可完成此次支付操作。
+
+
+
+# 9. 后台搭建
+
+作为一个后台管理模块，需要一定的权限信息，只有给管理员方能访问后台接口，所以需要新建一张权限表。
+
+![image-20221225201148241](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252011687.png)
+
+对应的把用户与对应的权限进行关联，所以再新建一张表：
+
+![image-20221225201241145](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252012498.png)
+
+由于本项目使用了springSecurity框架，对于授权相对比较简单。
+
+## 9.1 用户登录
+
+### 9.1.1 需求分析
+
+如下图若登录如何无管理员权限则提示错误。用户为系统管理员方可进入系统。
+
+![image-20221222185051162](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212221850516.png)
+
+后台系统不提供用户注册功能，只提供管理员登录功能。当前端表单发起请求过程中，后端security根据当前登录用户查询其权限，并封装为`LoginUser`。
+
+### 9.1.2 后端实现
+
+①`UserDetailsService`的实现类添加对应判断权限方法：
+
+```java
+ @Override
+@Transactional
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+    // 方法引用
+    queryWrapper.eq(StringUtils.isNotEmpty(username),User::getUsername,username);
+
+    User user = userMapper.selectOne(queryWrapper);
+
+    if (Objects.isNull(user)) {
+        throw new UsernameNotFoundException("用户名或密码错误");
+    }
+    //判断用户是否被删除
+    if (Objects.equals(user.getIsDelete(), IS_DELETED)) {
+        throw new SystemException(AppHttpCodeEnum.USER_IS_DELETED);
+    }
+
+    log.info("数据库登录用户：{}",user);
+    //TODO 查询角色权限
+    List<String> permissions = userMapper.selectRoleByUid(user.getUid());
+    if (!permissions.contains(ROLE_ADMIN)){
+        //非管理员
+        throw new SystemException(AppHttpCodeEnum.NO_OPERATOR_AUTH);
+    }
+
+    log.info("当前登录用户：{}；拥有权限：{}",user.getUsername(),permissions);
+
+    return new LoginUser(user,permissions);
+}
+```
+
+如果登录的用户不具有系统管理员`ROLE_ADMIN`权限，则返回前端403，信息为无权限操作。前端路由添加判断，若非管理员或未登录则页面必须跳转到登录接口。
+
+```js
+// 权限验证不通过给出提示
+if (res.code === 401 || res.code === 403) {
+  ElementUI.Message({
+    message: res.msg,
+    type: 'error'
+  });
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("_t");
+  // window.location.reload();
+  this.$router.replace("/login")
+}
+```
+
+
+
+②如果登录的是管理员，则把权限封装进`LoginUser`，为了防止直接使用url访问会拿到数据。可以在配置中添加拦截器，添加鉴权拦截器。
+
+LoginUser添加权限字段：
+
+```java
+@Data
+@NoArgsConstructor
+public class LoginUser implements UserDetails {
+
+    private User user;
+
+    private List<String> permissions;
+
+    public LoginUser(User user, List<String> permissions) {
+        this.user = user;
+        this.permissions = permissions;
+    }
+
+    /**
+     * authorities 不会被序列化到 redis
+     */
+    @JSONField(serialize = false)
+    private List<SimpleGrantedAuthority> authorities;
+
+    /**
+     * 封装 permissions 权限信息
+     *
+     * @return
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        if (authorities != null) {
+            return authorities;
+        }
+        authorities = permissions.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}
+```
+
+配置拦截器：
+
+```java
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable();// 关闭csrf
+    http
+            //不通过Session获取SecurityContext
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            // 对于登录接口、注册接口 允许匿名访问
+            .antMatchers("/user/login").anonymous()
+            //注销接口需要认证才能访问
+            .antMatchers("/user/logout").authenticated()
+            // 配置权限
+            .antMatchers("/user/*").hasAuthority("ROLE_ADMIN")
+            .antMatchers("/role/*").hasAuthority("ROLE_ADMIN")
+            .antMatchers("/goods/*").hasAuthority("ROLE_ADMIN")
+            // 除上面外的所有请求全部需要鉴权认证
+            .anyRequest().authenticated();
+
+    // 过滤器
+    http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+    // 配置异常处理器
+    http.exceptionHandling()
+            // 认证失败处理
+            .authenticationEntryPoint(authenticationEntryPoint)
+            // 授权失败
+            .accessDeniedHandler(accessDeniedHandler);
+
+    //关闭默认的注销功能
+    http.logout().disable();
+    //允许跨域
+    http.cors();
+}
+```
+
+登录接口的业务层方法：
+
+登陆成功后，缓存`LoginUser`到redis。
+
+```java
+/**
+ * 登录
+ *
+ * @param user
+ * @return ResponseResult.okResult(userLoginVo)
+ */
+@Override
+public ResponseResult login(User user) {
+    //判断用户名是否为空
+    if (StringUtils.isEmpty(user.getUsername())) {
+        throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
+    }
+    UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+    Authentication authentication = authenticationManager.authenticate(authenticationToken);
+    //判断是否认证通过
+    if (Objects.isNull(authentication)) {
+        throw new RuntimeException("用户名或密码错误");
+    }
+    // 认证成功，从Authentication获取LoginUser
+    LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+    log.info("loginUser:{}", loginUser);
+
+    String userId = loginUser.getUser().getUid().toString();
+    // 生成token
+    String jwt = JwtUtil.createJWT(userId);
+    // 存入redis
+    redisCache.setCacheObject(LOGIN_ADMIN_KEY + userId, loginUser);
+
+    UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
+    UserLoginVo userLoginVo = new UserLoginVo(jwt, userInfoVo);
+
+    log.info("用户以登陆==>{}", userLoginVo);
+
+    return ResponseResult.okResult(userLoginVo);
+}
+```
+
+
+
+登陆成功来到用户管理：本后台系统已上传至服务器，不方便提供url
+
+![image-20221225201342255](z-img/image-20221225201342255.png)
+
+## 9.2 用户管理
+
+### 9.2.1 需求分析
+
+需要分页查询系统所有用户，并可进行模糊搜索。
+
+然后就是添加用户、编辑用户、删除用户、批量删除用户功能。
+
+### 9.2.2 后端实现
+
+①以上全部接口需要管理员权限，前面配置类已配置过。接口一次性给出如下：
+
+```java
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    @Resource
+    private UserService userService;
+
+    @GetMapping("/username/{username}")
+    public ResponseResult userInfo(@PathVariable String username) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, username);
+        return ResponseResult.okResult(userService.getOne(queryWrapper));
+    }
+
+    /**
+     * 根据uid查询用户信息
+     *
+     * @param uid
+     * @return
+     */
+    @GetMapping("/{uid}")
+    public ResponseResult findOne(@PathVariable Integer uid) {
+        return ResponseResult.okResult(userService.getUserInfo(uid));
+    }
+    /**
+     * 新增或者更新
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/add")
+    public ResponseResult addUser(@RequestBody User user) {
+        return ResponseResult.okResult(userService.saveOrUpdateUser(user));
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/update")
+    public ResponseResult updateUser(@RequestBody User user) {
+        return ResponseResult.okResult(userService.updateUserInfo(user));
+    }
+
+    @GetMapping("/page")
+    public ResponseResult findPage(@RequestParam Integer pageNum,
+                                   @RequestParam Integer pageSize,
+                                   @RequestParam(defaultValue = "") String username,
+                                   @RequestParam(defaultValue = "") String phone,
+                                   @RequestParam(defaultValue = "") String email) {
+        return ResponseResult.okResult(userService.userRolePage(pageNum,pageSize,username,phone,email));
+    }
+
+    /**
+     * 把用户设置为删除状态
+     *
+     * @param uid
+     * @return
+     */
+    @DeleteMapping("/{uid}")
+    public ResponseResult setDeleted(@PathVariable Integer uid) {
+        return ResponseResult.okResult(userService.setDeletedByUid(uid));
+    }
+
+    /**
+     * 根据用户id删除
+     *
+     * @param uid
+     * @return
+     */
+    @DeleteMapping("/del/{uid}")
+    public ResponseResult deleteUser(@PathVariable Integer uid) {
+        return ResponseResult.okResult(userService.removeById(uid));
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/del/batch")
+    public ResponseResult deleteBatch(@RequestBody List<Integer> ids) {
+        return ResponseResult.okResult(userService.removeByIds(ids));
+    }
+
+}
+```
+
+②业务层
+
+```java
+@Slf4j
+@Service("userService")
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Resource
+    private RedisCache redisCache;
+
+    @Resource
+    private UserMapper userMapper;
+
+    @Override
+    public UserInfoVo getUserInfo(Integer uid) {
+        //根据用户id查询用户信息
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ObjectUtils.isNotEmpty(uid), User::getUid, uid);
+        User user = getOne(queryWrapper);
+        //封装成UserInfoVo
+        UserInfoVo vo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
+        return vo;
+    }
+
+    @Override
+    public boolean updateUserInfo(User user) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUid, user.getUid());
+        return update(user, queryWrapper);
+    }
+
+    @Override
+    public Integer setDeletedByUid(Integer uid) {
+        return userMapper.setDeletedByUid(uid);
+
+    }
+
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Override
+    public Page<UserRoleVo> userRolePage(Integer pageNum, Integer pageSize, String username, String phone, String email) {
+
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(Strings.isNotEmpty(username), User::getUsername, username);
+        queryWrapper.like(Strings.isNotEmpty(phone), User::getUsername, phone);
+        queryWrapper.like(Strings.isNotEmpty(email), User::getUsername, email);
+        Page<User> userPage = page(new Page<>(pageNum, pageSize), queryWrapper);
+
+        List<User> userList = userPage.getRecords();
+
+        List<UserRoleVo> orderGoodVoList = new ArrayList<>();
+        //封装用户权限
+        userList.forEach(u -> {
+            Integer uid = u.getUid();
+            List<Role> userRoleList = roleMapper.getUserRoleList(uid);
+            UserRoleVo userRoleVo = BeanCopyUtils.copyBean(u, UserRoleVo.class);
+            userRoleVo.setRoleList(userRoleList);
+            orderGoodVoList.add(userRoleVo);
+        });
+
+        Page<UserRoleVo> userRoleVoPage = new Page<>();
+        userRoleVoPage.setCurrent(userPage.getCurrent());
+        userRoleVoPage.setPages(userPage.getPages());
+        userRoleVoPage.setSize(userPage.getSize());
+        userRoleVoPage.setTotal(userPage.getTotal());
+
+        userRoleVoPage.setRecords(orderGoodVoList);
+
+        return userRoleVoPage;
+    }
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    @Transactional
+    public boolean saveOrUpdateUser(User user) {
+
+        //密码加密
+        String encode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encode);
+        userMapper.insertUser(user);
+
+        System.out.println(user);
+        Integer uid = user.getUid();
+        log.info("新增加的用户==>{}",uid);
+        //增加普通权限
+//        userMapper.insertUserRole(uid,2);
+
+        return true;
+    }
+}
+```
+
+## 9.3 商品管理
+
+### 9.3.1 需求分析
+
+![image-20221225201445466](https://gcore.jsdelivr.net/gh/roydonGuo/Typora-Pic/md-pic202212252014950.png)
+
+对数据库中商品表进行操作，包括基本CRUD。
+
+### 9.3.2 后端实现
+
+①控制层接口：
+
+在控制层直接使用MP条件构造器进行操作简短省事整洁。
+
+```java
+@RestController
+@RequestMapping("/goods")
+public class GoodsController {
+
+    @Resource
+    private GoodsService goodsService;
+
+    /**
+     * 分页查询所有商品
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page")
+    public ResponseResult selectAll(@RequestParam Integer pageNum,
+                                    @RequestParam Integer pageSize,
+                                    @RequestParam(defaultValue = "") String title) {
+        LambdaQueryWrapper<Goods> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(Goods::getTitle,title);
+        lambdaQueryWrapper.orderByDesc(Goods::getPriority);
+        return ResponseResult.okResult(goodsService.page(new Page<>(pageNum, pageSize),lambdaQueryWrapper));
+    }
+
+    /**
+     * 新增或者更新
+     *
+     * @param goods
+     * @return
+     */
+    @PostMapping
+    public ResponseResult addUser(@RequestBody Goods goods) {
+        return ResponseResult.okResult(goodsService.saveOrUpdate(goods));
+    }
+
+    /**
+     * 根据gid删除
+     *
+     * @param gid
+     * @return
+     */
+    @DeleteMapping("/del/{gid}")
+    public ResponseResult deleteUser(@PathVariable Integer gid) {
+        return ResponseResult.okResult(goodsService.removeById(gid));
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/del/batch")
+    public ResponseResult deleteBatch(@RequestBody List<Integer> ids) {
+        return ResponseResult.okResult(goodsService.removeByIds(ids));
+    }
+}
+```
+
+
+开发暂时告一段落......
 

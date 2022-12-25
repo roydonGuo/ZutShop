@@ -62,11 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 对于登录接口、注册接口 允许匿名访问
                 .antMatchers("/user/login").anonymous()
+//                .antMatchers("/goods/*").anonymous()
 //                .antMatchers("/alipay/pay").anonymous()
 //                .antMatchers("/alipay/notify").anonymous()
                 //注销接口需要认证才能访问
                 .antMatchers("/user/logout").authenticated()
-                .antMatchers("/user/update").authenticated()
+//                .antMatchers("/user/update").authenticated()
 //                .antMatchers("/address/*").authenticated()
 //                .antMatchers("/cart/*").authenticated()
 //                .antMatchers("/order/*").authenticated()

@@ -1,10 +1,7 @@
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.zut.ShopApplication;
-import edu.zut.domain.entity.DictDistrict;
-import edu.zut.domain.entity.Goods;
-import edu.zut.domain.entity.Order;
-import edu.zut.domain.entity.User;
+import edu.zut.domain.entity.*;
 import edu.zut.domain.vo.Area;
 import edu.zut.domain.vo.CartGoodsVo;
 import edu.zut.domain.vo.City;
@@ -18,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 import java.util.List;
-
-import static edu.zut.constants.SystemConstants.ORDER_CREATED;
 
 /**
  * Author: roydon - 2022/12/12
@@ -142,7 +137,19 @@ public class ShopApplicationTests {
     @Test
     void createOrderTest() {
 
+    }
 
+    @Resource
+    private GoodsCategoryService goodsCategoryService;
+
+    @Test
+    void buildTree() {
+        List<GoodsCategory> list = goodsCategoryService.getListTree();
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void test2(){
 
     }
 
